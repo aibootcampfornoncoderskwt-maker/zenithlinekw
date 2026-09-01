@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout title="Zenith Line Company Profile 2025" description="Download the Zenith Line Kuwait company profile covering construction, K-Span, HVAC, civil works, telecom, IT, trading, clients and previous works." image="/images/kspan-structure.webp">
+  <PageHero eyebrow="CORPORATE DOCUMENT" title="Zenith Line Company Profile 2025" text="The complete profile includes the company introduction, vision, mission, goals, service divisions, portfolio, organization references and historical works schedule." image="/images/kspan-structure.webp" imageAlt="K-Span structure from Zenith Line company profile" crumbs={[{ label: 'Home', href: '/' }, { label: 'Company Profile' }]} />
+  <section class="section"><div class="container profile-banner reveal"><div><span class="eyebrow">32-PAGE PROFILE</span><h2>Download the Complete Corporate Document</h2><p>Use the profile for procurement reviews, capability introductions and project discussions. Contract values and historical work statements should be verified directly with Zenith Line.</p><a class="button" href="/downloads/zenith-line-company-profile-2025.pdf" download>Download PDF Profile ↗</a></div><img src="/images/site-consulting.webp" alt="Construction professionals reviewing a project drawing" width="720" height="520" /></div></section>
+  <section class="cta-band"><div class="container cta-grid"><div><h2>Need a Capability Statement for a Tender?</h2><p>Contact Zenith Line for current registrations, approved documents and discipline-specific information.</p></div><div class="cta-actions"><a class="button" href={`https://wa.me/${site.phoneRaw}?text=${encodeURIComponent('Hello Zenith Line, I need current company documents or capability information for a project or tender.')}`}>Request Documents ↗</a></div></div></section>
+</BaseLayout>

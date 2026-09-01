@@ -1,0 +1,94 @@
+---
+import { site } from '../data/site';
+import { services } from '../data/services';
+
+interface Props {
+  defaultService?: string;
+  compact?: boolean;
+  contextType?: 'service' | 'brand';
+  contextValue?: string;
+}
+
+const { defaultService = '', compact = false, contextType = 'service', contextValue = '' } = Astro.props;
+const isBrand = contextType === 'brand';
+---
+
+<form class:list={["enquiry-form", compact && "enquiry-form-compact"]} data-whatsapp-form data-phone={site.phoneRaw} data-context-type={contextType} data-context-value={contextValue} data-default-service={defaultService}>
+  <div class="form-grid">
+    <label><span>Full name *</span><input name="name" type="text" autocomplete="name" required placeholder="Your name" /></label>
+    <label><span>Company</span><input name="company" type="text" autocomplete="organization" placeholder="Company name" /></label>
+    <label><span>Mobile number *</span><input name="mobile" type="tel" autocomplete="tel" required placeholder="+965" /></label>
+    <label><span>Kuwait area *</span><input name="area" type="text" autocomplete="address-level2" required placeholder="e.g. Shuwaikh" /></label>
+    {isBrand ? (
+      <>
+        <label><span>Product category *</span><input name="category" type="text" required placeholder="e.g. switches, cameras, cabling" /></label>
+        <label><span>Model number, if known</span><input name="model" type="text" placeholder="Optional" /></label>
+        <label><span>Quantity</span><input name="quantity" type="text" placeholder="Optional" /></label>
+        <input type="hidden" name="brand" value={contextValue} />
+        <label class="form-span"><span>Project requirement *</span><textarea name="requirement" rows={compact ? 4 : 5} required placeholder={`Describe the application, installation/configuration needs, drawings or specification for this ${contextValue} requirement`}></textarea></label>
+      </>
+    ) : (
+      <>
+        <label class="form-span">
+          <span>Required service *</span>
+          <select name="service" required>
+            <option value="">Select a service</option>
+            {services.map((service) => <option value={service.shortTitle} selected={defaultService === service.shortTitle}>{service.shortTitle}</option>)}
+          </select>
+        </label>
+        <label class="form-span"><span>Project requirement *</span><textarea name="requirement" rows={compact ? 4 : 5} required placeholder="Describe the property, project, current issue, quantities, drawings or required quotation"></textarea></label>
+      </>
+    )}
+  </div>
+  <label class="consent"><input name="consent" type="checkbox" required /> <span>I agree to share these details with Zenith Line through WhatsApp.</span></label>
+  <button class="button button-whatsapp form-submit" type="submit" data-cta-location="enquiry-form" data-service={!isBrand ? defaultService : undefined} data-brand={isBrand ? contextValue : undefined} data-conversion="whatsapp">Review Enquiry in WhatsApp <span aria-hidden="true">↗</span></button>
+  <p class="form-note" data-form-note>{isBrand ? 'Your enquiry will open in WhatsApp for you to review and send.' : 'Your enquiry will open securely in WhatsApp for you to review and send.'}</p>
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-whatsapp-form]').forEach((form) => {
+    if (form.dataset.ready === 'true') return;
+    form.dataset.ready = 'true';
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+      const data = new FormData(form);
+      const phone = form.dataset.phone;
+      const isBrandForm = form.dataset.contextType === 'brand';
+      let message: string;
+      if (isBrandForm) {
+        const brand = String(data.get('brand') || form.dataset.contextValue || 'the requested brand');
+        message = [
+          `Hello Zenith Line, I would like to enquire about ${brand} products or solutions in Kuwait.`,
+          '',
+          `Name: ${data.get('name') || '-'}`,
+          `Company: ${data.get('company') || '-'}`,
+          `Mobile: ${data.get('mobile') || '-'}`,
+          `Kuwait area: ${data.get('area') || '-'}`,
+          `Brand: ${brand}`,
+          `Product category: ${data.get('category') || '-'}`,
+          `Model number, if known: ${data.get('model') || '-'}`,
+          `Quantity: ${data.get('quantity') || '-'}`,
+          `Project requirement: ${data.get('requirement') || '-'}`,
+          `Source page: ${window.location.href}`
+        ].join('\n');
+        window.dispatchEvent(new CustomEvent('zenith:conversion', { detail: { type: 'whatsapp_form', brand } }));
+      } else {
+        const selectedService = String(data.get('service') || form.dataset.defaultService || 'a project requirement');
+        message = [
+          `Hello Zenith Line, I would like to enquire about ${selectedService}.`,
+          '',
+          `Name: ${data.get('name') || '-'}`,
+          `Company: ${data.get('company') || '-'}`,
+          `Mobile: ${data.get('mobile') || '-'}`,
+          `Kuwait area: ${data.get('area') || '-'}`,
+          `Service: ${selectedService}`,
+          `Requirement: ${data.get('requirement') || '-'}`,
+          `Source page: ${window.location.href}`
+        ].join('\n');
+        window.dispatchEvent(new CustomEvent('zenith:conversion', { detail: { type: 'whatsapp_form', service: selectedService } }));
+      }
+      window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+    });
+  });
+</script>

@@ -1,0 +1,87 @@
+---
+import { site } from '../data/site';
+
+const path = Astro.url.pathname;
+const active = (href: string) => href === '/' ? path === '/' : path.startsWith(href);
+const whatsappUrl = `https://wa.me/${site.phoneRaw}?text=${encodeURIComponent('Hello Zenith Line, I would like to discuss a project requirement in Kuwait.')}`;
+---
+
+<div class="utility-bar">
+  <div class="container utility-inner">
+    <span class="utility-kicker"><b>KUWAIT</b> Multi-disciplinary contracting, technology & supply</span>
+    <div class="utility-links">
+      <a href={`tel:+${site.phoneRaw}`} aria-label={`Call Zenith Line on ${site.phoneDisplay}`}><span>Call</span> {site.phoneDisplay}</a>
+      <a href={`mailto:${site.email}`}><span>Email</span> {site.email}</a>
+    </div>
+  </div>
+</div>
+
+<header class="site-header" data-header>
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="Zenith Line home">
+      <span class="brand-mark"><img src="/images/zenith-logo.png" alt="" width="48" height="48" /></span>
+      <span class="brand-copy"><strong>ZENITH LINE <i>CO.</i></strong><small>CONTRACTING · TECHNOLOGY · SUPPLY</small></span>
+    </a>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-navigation" data-menu-toggle>
+      <span></span><span></span><span></span><span class="sr-only">Open navigation</span>
+    </button>
+
+    <nav class="main-nav" id="main-navigation" aria-label="Main navigation" data-menu>
+      <div class="mobile-menu-head">
+        <strong>Explore Zenith Line</strong>
+        <span>Kuwait project solutions</span>
+      </div>
+      <a class:list={[active('/') && 'is-active']} href="/">Home</a>
+      <div class="nav-dropdown">
+        <button class:list={[active('/services/') && 'is-active']} type="button" aria-expanded="false" aria-controls="services-mega-menu" data-dropdown-toggle>
+          Services <span class="chevron" aria-hidden="true"></span>
+        </button>
+        <div class="dropdown-panel" id="services-mega-menu">
+          <a class="mega-overview" href="/services/">
+            <small>ALL CAPABILITIES</small>
+            <strong>One accountable partner across every project discipline.</strong>
+            <span>Explore all 16 services <b>→</b></span>
+          </a>
+          <div class="mega-group">
+            <strong>Construction & Structures</strong>
+            <a href="/services/construction-renovation/">Construction & Renovation</a>
+            <a href="/services/civil-road-works/">Civil & Road Works</a>
+            <a href="/services/k-span-structures/">K-Span Structures</a>
+            <a href="/services/shade-structures/">Shade Structures</a>
+            <a href="/services/hvac-services/">HVAC Services</a>
+            <a href="/services/specialized-civil-services/">Specialized Civil Services</a>
+          </div>
+          <div class="mega-group">
+            <strong>Telecom & IT</strong>
+            <a href="/services/router-wifi/">Router & Wi-Fi</a>
+            <a href="/services/structured-cabling/">Structured Cabling</a>
+            <a href="/services/voip-voice/">VoIP & Voice</a>
+            <a href="/services/pbx-telephone-exchange/">PBX / Telephone Exchange</a>
+            <a href="/services/network-security/">Network Security</a>
+            <a href="/services/installation-support/">Installation & Support</a>
+          </div>
+          <div class="mega-group">
+            <strong>Trading & Support</strong>
+            <a href="/services/import-export/">Import / Export</a>
+            <a href="/services/supply-logistics/">Supply & Logistics</a>
+            <a href="/services/engineering-manpower/">Engineering & Manpower</a>
+            <a href="/services/tools-equipment-rental/">Tools & Equipment</a>
+            <a class="view-all-link" href="/company-profile/">Company profile <span>↗</span></a>
+          </div>
+        </div>
+      </div>
+      <a class:list={[active('/products-supply/') && 'is-active']} href="/products-supply/">Products & Supply</a>
+      <a class:list={[active('/brands/') && 'is-active']} href="/brands/">Brands</a>
+      <a class:list={[active('/projects/') && 'is-active']} href="/projects/">Projects</a>
+      <a class:list={[active('/about/') && 'is-active']} href="/about/">About</a>
+      <a class:list={[active('/contact/') && 'is-active']} href="/contact/">Contact</a>
+      <a class="button button-small nav-cta" href={whatsappUrl} target="_blank" rel="noopener noreferrer"><span class="status-dot"></span> WhatsApp Enquiry</a>
+      <div class="mobile-menu-contact">
+        <span>Direct assistance</span>
+        <a href={`tel:+${site.phoneRaw}`}>{site.phoneDisplay}</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<button class="menu-backdrop" type="button" aria-label="Close navigation" data-menu-backdrop></button>

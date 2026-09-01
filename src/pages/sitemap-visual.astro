@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { services } from '../data/services';
+import { publishedBrandPages } from '../data/brand-pages';
+import { getBrandBySlug } from '../data/brands';
+---
+
+<BaseLayout title="Website Sitemap" description="Browse all Zenith Line website pages and services.">
+  <PageHero eyebrow="SITE DIRECTORY" title="Website Sitemap" text="A clear directory of Zenith Line pages, services and company information." crumbs={[{ label: 'Home', href: '/' }, { label: 'Sitemap' }]} />
+  <section class="section"><div class="container content-grid"><article class="content-card"><h2 style="font-size:1.7rem">Company</h2><ul><li><a href="/">Home</a></li><li><a href="/about/">About</a></li><li><a href="/projects/">Projects</a></li><li><a href="/products-supply/">Products & Supply</a></li><li><a href="/brands/">Brands</a></li><li><a href="/company-profile/">Company Profile</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy/">Privacy</a></li></ul></article><article class="content-card"><h2 style="font-size:1.7rem">Services</h2><ul><li><a href="/services/">All Services</a></li>{services.map((service) => <li><a href={`/services/${service.slug}/`}>{service.shortTitle}</a></li>)}</ul></article><article class="content-card"><h2 style="font-size:1.7rem">Brand Pages</h2><ul><li><a href="/brands/">All Brands</a></li>{publishedBrandPages.map((brandPage) => { const brand = getBrandBySlug(brandPage.slug); return brand ? <li><a href={`/brands/${brand.slug}/`}>{brand.name}</a></li> : null; })}</ul></article></div></section>
+</BaseLayout>

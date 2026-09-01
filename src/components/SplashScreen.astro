@@ -1,0 +1,156 @@
+<div class="splash-screen" aria-hidden="true">
+  <div class="splash-mark">
+    <svg class="splash-ring" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+      <circle class="splash-ring-track" cx="50" cy="50" r="47" pathLength="100"></circle>
+      <circle class="splash-ring-arc" cx="50" cy="50" r="47" pathLength="100"></circle>
+      <circle class="splash-ring-highlight" cx="50" cy="50" r="47" pathLength="100"></circle>
+    </svg>
+    <img src="/images/zenith-logo.png" alt="" width="320" height="302" decoding="async" fetchpriority="high" />
+  </div>
+</div>
+
+<script is:inline>
+  (() => {
+    const root = document.documentElement;
+    if (!root.classList.contains('splash-active')) return;
+
+    const finish = () => {
+      root.classList.remove('splash-active', 'splash-exiting');
+    };
+
+    window.setTimeout(() => root.classList.add('splash-exiting'), 1000);
+    window.setTimeout(finish, 1400);
+  })();
+</script>
+
+<style>
+  :global(html.splash-active) {
+    overflow: hidden;
+    scrollbar-gutter: stable;
+  }
+
+  .splash-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    padding: max(24px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
+    visibility: hidden;
+    overflow: hidden;
+    place-items: center;
+    opacity: 0;
+    pointer-events: none;
+    background: #0c272b;
+  }
+
+  :global(html.splash-active) .splash-screen {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  :global(html.splash-exiting) .splash-screen {
+    opacity: 0;
+    transition: opacity 350ms ease 90ms;
+  }
+
+  .splash-mark {
+    --splash-logo-size: clamp(220px, 17vw, 290px);
+    --splash-ring-size: calc(var(--splash-logo-size) + 28px);
+    position: relative;
+    display: grid;
+    width: var(--splash-ring-size);
+    height: var(--splash-ring-size);
+    flex: 0 0 auto;
+    place-items: center;
+    opacity: 1;
+  }
+
+  :global(html.splash-exiting) .splash-mark {
+    opacity: 0;
+    transition: opacity 180ms ease;
+  }
+
+  .splash-mark img {
+    position: relative;
+    z-index: 1;
+    width: var(--splash-logo-size);
+    height: auto;
+    max-height: calc(100dvh - 96px);
+    object-fit: contain;
+    opacity: 0;
+    transform: scale(.97);
+  }
+
+  :global(html.splash-active) .splash-mark img {
+    animation: splash-logo-in 340ms cubic-bezier(.2,.7,.2,1) 40ms forwards;
+  }
+
+  .splash-ring {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    transform: rotate(-90deg);
+  }
+
+  :global(html.splash-active) .splash-ring {
+    animation: splash-ring-turn 1150ms linear infinite;
+  }
+
+  .splash-ring circle {
+    fill: none;
+    stroke-width: 3;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .splash-ring-track {
+    stroke: rgba(201,147,105,.24);
+  }
+
+  .splash-ring-arc {
+    stroke: #c99369;
+    stroke-dasharray: 63 37;
+    stroke-linecap: round;
+  }
+
+  .splash-ring-highlight {
+    stroke: rgba(247,244,239,.82);
+    stroke-dasharray: 7 93;
+    stroke-dashoffset: -68;
+    stroke-linecap: round;
+  }
+
+  @keyframes splash-logo-in {
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes splash-ring-turn {
+    to { transform: rotate(270deg); }
+  }
+
+  @media (max-width: 900px) {
+    .splash-mark {
+      --splash-logo-size: clamp(180px, 24vw, 235px);
+      --splash-ring-size: calc(var(--splash-logo-size) + 28px);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .splash-mark {
+      --splash-logo-size: clamp(145px, 42vw, 190px);
+      --splash-ring-size: calc(var(--splash-logo-size) + 28px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .splash-screen, .splash-mark, .splash-ring {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>

@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import BrandLogo from '../components/BrandLogo.astro';
+import { brands } from '../data/brands';
+import { getBrandPage } from '../data/brand-pages';
+import { site } from '../data/site';
+
+function brandHref(slug: string) {
+  return getBrandPage(slug)?.status === 'published' ? `/brands/${slug}/` : undefined;
+}
+
+const brandSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Technology Brands Supplied and Supported by Zenith Line Kuwait',
+  url: `${site.domain}/brands/`,
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: brands.length,
+    itemListElement: brands.map((brand, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: brand.name
+    }))
+  }
+};
+---
+
+<BaseLayout
+  title="Technology Brands & Product Ecosystem in Kuwait"
+  description="Explore networking, cabling, telecom, security, power and enterprise technology brands available through Zenith Line for Kuwait project requirements."
+  image="/images/network-rack.webp"
+  schema={brandSchema}
+>
+  <PageHero
+    eyebrow="BRANDS & MANUFACTURERS"
+    title="Technology Brands for Kuwait Project Requirements"
+    text={`Explore ${brands.length} recognized brands across networking, structured cabling, fibre, voice, surveillance, access control, power, computing and enterprise infrastructure.`}
+    image="/images/network-rack.webp"
+    imageAlt="Structured network rack installation"
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'Brands' }]}
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="brands-page-toolbar reveal">
+        <div>
+          <span class="eyebrow">COMPLETE BRAND DIRECTORY</span>
+          <h2>Find a Preferred Manufacturer</h2>
+          <p>Use the search to locate a brand, then send the model, specification or bill of quantity for availability and quotation.</p>
+        </div>
+        <label class="brand-search">
+          <span class="sr-only">Search brands</span>
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m21 21-4.35-4.35m2.35-5.4A7.75 7.75 0 1 1 3.5 11.25a7.75 7.75 0 0 1 15.5 0Z" /></svg>
+          <input type="search" placeholder="Search brand name…" autocomplete="off" data-brand-search />
+        </label>
+      </div>
+
+      <div class="brands-directory" data-brand-grid>
+        {brands.map((brand) => <BrandLogo brand={brand} href={brandHref(brand.slug)} />)}
+      </div>
+      <p class="brand-empty" data-brand-empty hidden>No brand matches your search. Contact the Zenith Line team to check alternative sourcing.</p>
+    </div>
+  </section>
+
+  <section class="section section-ivory">
+    <div class="container brand-procurement-grid">
+      <div class="reveal">
+        <span class="eyebrow">PROJECT-BASED SOURCING</span>
+        <h2>Need a Particular Model or Approved Equivalent?</h2>
+        <p>Share the required manufacturer, part number, quantity and delivery location. Zenith Line can review the requirement, check sourcing options and propose a suitable commercial route.</p>
+      </div>
+      <div class="content-card reveal">
+        <h3>Important brand information</h3>
+        <p>All trademarks, logos and brand names belong to their respective owners. References indicate products that may be sourced, supplied or integrated according to project requirements and do not imply an authorized partnership unless expressly confirmed. Availability and warranty terms are confirmed with each quotation.</p>
+        <a class="button button-whatsapp" href={`https://wa.me/${site.phoneRaw}?text=${encodeURIComponent('Hello Zenith Line, I need pricing and availability for a specific technology brand or model in Kuwait.')}`} target="_blank" rel="noopener noreferrer">Request Brand Availability ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const search = document.querySelector<HTMLInputElement>('[data-brand-search]');
+    const cards = [...document.querySelectorAll<HTMLElement>('[data-brand-grid] [data-brand-name]')];
+    const empty = document.querySelector<HTMLElement>('[data-brand-empty]');
+    search?.addEventListener('input', () => {
+      const query = search.value.trim().toLowerCase();
+      let visible = 0;
+      cards.forEach((card) => {
+        const matches = !query || card.dataset.brandName?.includes(query);
+        card.hidden = !matches;
+        if (matches) visible += 1;
+      });
+      if (empty) empty.hidden = visible !== 0;
+    });
+  </script>
+</BaseLayout>

@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout title="Contact Zenith Line Kuwait" description="Contact Zenith Line in Mirqab, Kuwait for construction, civil, K-Span, HVAC, telecom, IT, structured cabling, trading, supply and manpower enquiries." image="/images/completed-flooring.webp">
+  <PageHero eyebrow="CONTACT ZENITH LINE" title="Start Your Project Conversation" text="Share the discipline, Kuwait area and a short requirement. For technical enquiries, drawings or bills of quantity can also be sent by email after the initial conversation." image="/images/completed-flooring.webp" imageAlt="Completed commercial flooring project in Kuwait" crumbs={[{ label: 'Home', href: '/' }, { label: 'Contact' }]} />
+  <section class="section section-ivory" id="enquiry"><div class="container enquiry-layout"><div class="reveal"><span class="eyebrow">KUWAIT OFFICE</span><h2>Contact Details</h2><p style="margin-top:20px">Use the primary number for calls and WhatsApp project enquiries.</p><div class="contact-details"><div class="contact-detail"><small>Primary phone & WhatsApp</small><a href={`tel:+${site.phoneRaw}`}>{site.phoneDisplay}</a></div><div class="contact-detail"><small>Additional contact numbers</small>{site.alternatePhones.map((phone) => <span>{phone}</span>)}</div><div class="contact-detail"><small>Email</small><a href={`mailto:${site.email}`}>{site.email}</a></div><div class="contact-detail"><small>Office address</small><span>{site.address}</span></div><div class="contact-detail"><small>Website</small><a href={site.domain}>{site.domain.replace('https://', '')}</a></div></div></div><div class="reveal"><EnquiryForm /></div></div></section>
+  <section class="section"><div class="container content-grid"><article class="content-card reveal"><h2 style="font-size:1.8rem">What to Include</h2><ul><li>Required service or product</li><li>Kuwait area and property type</li><li>Approximate quantity or project size</li><li>Target programme or delivery date</li><li>Available drawing, BOQ or photograph</li></ul></article><article class="content-card reveal"><h2 style="font-size:1.8rem">What Happens Next</h2><ul><li>The enquiry is directed to the relevant division</li><li>The team clarifies the requirement</li><li>A survey may be scheduled where necessary</li><li>The agreed proposal or quotation is prepared</li></ul></article></div></section>
+</BaseLayout>

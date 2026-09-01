@@ -1,0 +1,39 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  text: string;
+  image?: string;
+  imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
+  crumbs?: { label: string; href?: string }[];
+  primaryAction?: { label: string; href: string; ariaLabel?: string };
+  secondaryAction?: { label: string; href: string };
+  reassurance?: string;
+  serviceName?: string;
+  brandName?: string;
+  logo?: string;
+  logoAlt?: string;
+}
+const { eyebrow, title, text, image, imageAlt = '', imageWidth = 760, imageHeight = 560, crumbs = [], primaryAction, secondaryAction, reassurance, serviceName, brandName, logo, logoAlt = '' } = Astro.props;
+const dataAttrs = brandName ? { 'data-brand': brandName } : { 'data-service': serviceName };
+---
+
+<section class:list={["page-hero", image && "page-hero-image"]}>
+  <div class="container page-hero-grid">
+    <div class="page-hero-content reveal is-visible">
+      {crumbs.length > 0 && <nav class="breadcrumbs" aria-label="Breadcrumb">{crumbs.map((crumb, i) => <>{crumb.href ? <a href={crumb.href}>{crumb.label}</a> : <span>{crumb.label}</span>}{i < crumbs.length - 1 && <b>/</b>}</>)}</nav>}
+      {logo && <span class="page-hero-brandmark"><img src={logo} alt={logoAlt} width="132" height="56" loading="eager" decoding="async" /></span>}
+      <span class="eyebrow">{eyebrow}</span>
+      <h1>{title}</h1>
+      <p>{text}</p>
+      {(primaryAction || secondaryAction) && <div class="page-hero-actions">
+        {primaryAction && <a class="button service-hero-primary" href={primaryAction.href} target="_blank" rel="noopener noreferrer" aria-label={primaryAction.ariaLabel ?? primaryAction.label} data-cta-location="hero" {...dataAttrs} data-conversion="whatsapp">{primaryAction.label} <span aria-hidden="true">↗</span></a>}
+        {secondaryAction && <a class="button button-secondary" href={secondaryAction.href}>{secondaryAction.label}</a>}
+      </div>}
+      {reassurance && <p class="page-hero-reassurance">{reassurance}</p>}
+    </div>
+    {image && <div class="page-hero-visual reveal is-visible"><img src={image} alt={imageAlt} width={imageWidth} height={imageHeight} loading="eager" decoding="async" fetchpriority="high" /></div>}
+  </div>
+</section>

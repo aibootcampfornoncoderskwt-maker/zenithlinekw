@@ -1,0 +1,219 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SplashScreen from '../components/SplashScreen.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  noindex?: boolean;
+  schema?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const { title, description, image = '/images/construction-frame.webp', noindex = false, schema } = Astro.props;
+const canonical = new URL(Astro.url.pathname, site.domain).toString();
+const fullTitle = title.includes('Zenith Line') ? title : `${title} | Zenith Line Kuwait`;
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${site.domain}/#organization`,
+  name: site.name,
+  legalName: site.legalName,
+  url: site.domain,
+  logo: `${site.domain}/images/zenith-logo.png`,
+  telephone: site.phoneDisplay,
+  email: site.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '#1, 4th Floor, M Square Complex, Abdulmunim Street',
+    addressLocality: 'Mirqab',
+    addressCountry: 'KW'
+  },
+  areaServed: { '@type': 'Country', name: 'Kuwait' }
+};
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${site.domain}/#website`,
+  name: site.name,
+  url: site.domain,
+  inLanguage: 'en',
+  publisher: { '@id': `${site.domain}/#organization` }
+};
+
+const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+const bingSiteVerification = import.meta.env.PUBLIC_BING_SITE_VERIFICATION;
+const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0c272b" />
+    {noindex && <meta name="robots" content="noindex,follow" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/images/zenith-logo.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Zenith Line Co." />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(image, site.domain).toString()} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, site.domain).toString()} />
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        const clearSplash = () => root.classList.remove('splash-active', 'splash-exiting');
+        window.setTimeout(clearSplash, 2400);
+
+        try {
+          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+          let alreadyShown = false;
+          try {
+            alreadyShown = sessionStorage.getItem('zenithSplashShown') === 'true';
+            if (!alreadyShown) sessionStorage.setItem('zenithSplashShown', 'true');
+          } catch {
+            alreadyShown = false;
+          }
+
+          if (!alreadyShown) root.classList.add('splash-active');
+        } catch {
+          clearSplash();
+        }
+      })();
+    </script>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    {schema && <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />}
+    {googleSiteVerification && <meta name="google-site-verification" content={googleSiteVerification} />}
+    {bingSiteVerification && <meta name="msvalidate.01" content={bingSiteVerification} />}
+    {gaMeasurementId && <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}></script>}
+    {gaMeasurementId && <script is:inline define:vars={{ gaMeasurementId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', gaMeasurementId);
+    </script>}
+  </head>
+  <body>
+    <SplashScreen />
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <Header />
+    <main id="main-content"><slot /></main>
+    <Footer />
+    <script is:inline>
+      (() => {
+        const header = document.querySelector('[data-header]');
+        const toggle = document.querySelector('[data-menu-toggle]');
+        const menu = document.querySelector('[data-menu]');
+        const backdrop = document.querySelector('[data-menu-backdrop]');
+        const dropdownToggles = document.querySelectorAll('[data-dropdown-toggle]');
+        const closeMenu = () => {
+          if (!toggle || !menu) return;
+          toggle.setAttribute('aria-expanded', 'false');
+          menu.classList.remove('is-open');
+          backdrop?.classList.remove('is-visible');
+          document.body.classList.remove('menu-open');
+        };
+        toggle?.addEventListener('click', () => {
+          const open = toggle.getAttribute('aria-expanded') === 'true';
+          toggle.setAttribute('aria-expanded', String(!open));
+          menu?.classList.toggle('is-open', !open);
+          backdrop?.classList.toggle('is-visible', !open);
+          document.body.classList.toggle('menu-open', !open);
+        });
+        dropdownToggles.forEach((button) => button.addEventListener('click', () => {
+          const open = button.getAttribute('aria-expanded') === 'true';
+          dropdownToggles.forEach((item) => item.setAttribute('aria-expanded', 'false'));
+          button.setAttribute('aria-expanded', String(!open));
+        }));
+
+        const DROPDOWN_CLOSE_DELAY = 180;
+        let dropdownCloseTimer;
+        document.querySelectorAll('.nav-dropdown').forEach((dropdown) => {
+          const trigger = dropdown.querySelector('[data-dropdown-toggle]');
+          if (!trigger) return;
+          const openDropdown = () => {
+            window.clearTimeout(dropdownCloseTimer);
+            dropdownToggles.forEach((item) => item.setAttribute('aria-expanded', String(item === trigger)));
+          };
+          const scheduleClose = () => {
+            window.clearTimeout(dropdownCloseTimer);
+            dropdownCloseTimer = window.setTimeout(() => trigger.setAttribute('aria-expanded', 'false'), DROPDOWN_CLOSE_DELAY);
+          };
+          dropdown.addEventListener('mouseenter', openDropdown);
+          dropdown.addEventListener('mouseleave', scheduleClose);
+          dropdown.addEventListener('focusout', (event) => {
+            if (event.relatedTarget instanceof Node && dropdown.contains(event.relatedTarget)) return;
+            scheduleClose();
+          });
+        });
+
+        document.addEventListener('click', (event) => {
+          if (!(event.target instanceof Element)) return;
+          if (!event.target.closest('.nav-dropdown')) dropdownToggles.forEach((button) => button.setAttribute('aria-expanded', 'false'));
+          if (!event.target.closest('.header-inner')) closeMenu();
+        });
+        backdrop?.addEventListener('click', closeMenu);
+        document.addEventListener('keydown', (event) => {
+          if (event.key !== 'Escape') return;
+          const openToggle = Array.from(dropdownToggles).find((button) => button.getAttribute('aria-expanded') === 'true');
+          if (openToggle) {
+            openToggle.setAttribute('aria-expanded', 'false');
+            openToggle.focus();
+            return;
+          }
+          closeMenu();
+        });
+        window.addEventListener('resize', () => {
+          if (window.innerWidth > 1080) closeMenu();
+        }, { passive: true });
+        window.addEventListener('scroll', () => header?.classList.toggle('is-scrolled', window.scrollY > 60), { passive: true });
+
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const reveals = document.querySelectorAll('.reveal');
+        if (reduced || !('IntersectionObserver' in window)) reveals.forEach((el) => el.classList.add('is-visible'));
+        else {
+          const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          }), { threshold: 0.12, rootMargin: '0px 0px -40px' });
+          reveals.forEach((el) => observer.observe(el));
+        }
+      })();
+    </script>
+    {gaMeasurementId && <script is:inline>
+      (() => {
+        const track = (name, params) => { if (typeof window.gtag === 'function') window.gtag('event', name, params); };
+        document.addEventListener('click', (event) => {
+          const target = event.target instanceof Element ? event.target.closest('a') : null;
+          if (!target) return;
+          if (target.matches('[data-conversion="whatsapp"]')) {
+            track('whatsapp_click', { cta_location: target.dataset.ctaLocation || '', service: target.dataset.service || '', brand: target.dataset.brand || '' });
+          } else if (target.matches('a[href^="tel:"]')) {
+            track('phone_click', { link_url: target.getAttribute('href') || '' });
+          } else if (target.matches('a[href$=".pdf"]')) {
+            track('company_profile_download', { link_url: target.getAttribute('href') || '' });
+          }
+        });
+        window.addEventListener('zenith:conversion', (event) => {
+          const detail = event.detail || {};
+          track('whatsapp_form_submit', { service: detail.service || '', brand: detail.brand || '' });
+        });
+      })();
+    </script>}
+  </body>
+</html>

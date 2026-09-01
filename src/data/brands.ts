@@ -1,0 +1,70 @@
+export interface Brand {
+  name: string;
+  slug: string;
+  logo?: string;
+}
+
+export const brands: Brand[] = [
+  { name: '3M', slug: '3m', logo: '/images/brands/3m.svg' },
+  { name: 'APC', slug: 'apc', logo: '/images/brands/apc.svg' },
+  { name: 'Aruba', slug: 'aruba', logo: '/images/brands/aruba.svg' },
+  { name: 'Avaya', slug: 'avaya', logo: '/images/brands/avaya.svg' },
+  { name: 'Axis Communications', slug: 'axis-communications' },
+  { name: 'B3', slug: 'b3' },
+  { name: 'Belden', slug: 'belden', logo: '/images/brands/belden.svg' },
+  { name: 'Birla Ericsson', slug: 'birla-ericsson' },
+  { name: 'Bosch', slug: 'bosch', logo: '/images/brands/bosch.svg' },
+  { name: 'Cisco', slug: 'cisco', logo: '/images/brands/cisco.svg' },
+  { name: 'Commax', slug: 'commax', logo: '/images/brands/commax.svg' },
+  { name: 'CommScope', slug: 'commscope' },
+  { name: 'Corning', slug: 'corning', logo: '/images/brands/corning.svg' },
+  { name: 'Dahua', slug: 'dahua' },
+  { name: 'Datwyler', slug: 'datwyler' },
+  { name: 'Dell', slug: 'dell', logo: '/images/brands/dell.svg' },
+  { name: 'D-Link', slug: 'd-link', logo: '/images/brands/dlink.svg' },
+  { name: 'DrayTek', slug: 'draytek' },
+  { name: 'Eaton', slug: 'eaton', logo: '/images/brands/eaton.svg' },
+  { name: 'Excel Networking', slug: 'excel-networking' },
+  { name: 'EZVIZ', slug: 'ezviz', logo: '/images/brands/ezviz.svg' },
+  { name: 'FingerTec', slug: 'fingertec' },
+  { name: 'Fortinet', slug: 'fortinet', logo: '/images/brands/fortinet.svg' },
+  { name: 'Gigaset', slug: 'gigaset' },
+  { name: 'Grandstream', slug: 'grandstream' },
+  { name: 'Gulf Cable', slug: 'gulf-cable' },
+  { name: 'HES / HSC', slug: 'hes-hsc' },
+  { name: 'Hikvision', slug: 'hikvision', logo: '/images/brands/hikvision.svg' },
+  { name: 'Honeywell', slug: 'honeywell', logo: '/images/brands/honeywell.svg' },
+  { name: 'HP', slug: 'hp', logo: '/images/brands/hp.svg' },
+  { name: 'Hubbell', slug: 'hubbell', logo: '/images/brands/hubbell.svg' },
+  { name: 'Juniper Networks', slug: 'juniper-networks', logo: '/images/brands/juniper.svg' },
+  { name: 'Kuwes', slug: 'kuwes' },
+  { name: 'Leviton', slug: 'leviton', logo: '/images/brands/leviton.svg' },
+  { name: 'LS Cable & System', slug: 'ls-cable-system' },
+  { name: 'MEFC', slug: 'mefc' },
+  { name: 'MikroTik', slug: 'mikrotik', logo: '/images/brands/mikrotik.svg' },
+  { name: 'Molex', slug: 'molex', logo: '/images/brands/molex.svg' },
+  { name: 'Norden', slug: 'norden' },
+  { name: 'Opterna', slug: 'opterna' },
+  { name: 'Optronics', slug: 'optronics' },
+  { name: 'Panasonic', slug: 'panasonic', logo: '/images/brands/panasonic.svg' },
+  { name: 'Panduit', slug: 'panduit', logo: '/images/brands/panduit.svg' },
+  { name: 'R&M', slug: 'r-m' },
+  { name: 'Ramcro', slug: 'ramcro' },
+  { name: 'Raritan', slug: 'raritan' },
+  { name: 'Ruijie', slug: 'ruijie' },
+  { name: 'Schneider Electric', slug: 'schneider-electric', logo: '/images/brands/schneider.svg' },
+  { name: 'SYSTIMAX', slug: 'systimax' },
+  { name: 'TE Connectivity', slug: 'te-connectivity', logo: '/images/brands/te-connectivity.svg' },
+  { name: 'Toten', slug: 'toten' },
+  { name: 'Tova', slug: 'tova' },
+  { name: 'TP-Link', slug: 'tp-link', logo: '/images/brands/tplink.svg' },
+  { name: 'Ubiquiti', slug: 'ubiquiti', logo: '/images/brands/ubiquiti.svg' },
+  { name: 'UNV / Uniview', slug: 'unv-uniview' },
+  { name: 'Western Digital (WD)', slug: 'western-digital', logo: '/images/brands/western-digital.svg' },
+  { name: 'Yealink', slug: 'yealink' },
+  { name: 'ZKTeco', slug: 'zkteco' }
+];
+
+export function getBrandBySlug(slug: string) {
+  return brands.find((brand) => brand.slug === slug);
+}

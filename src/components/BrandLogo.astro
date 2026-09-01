@@ -1,0 +1,35 @@
+---
+import type { Brand } from '../data/brands';
+
+interface Props {
+  brand: Brand;
+  compact?: boolean;
+  href?: string;
+  ariaLabel?: string;
+}
+
+const { brand, compact = false, href, ariaLabel } = Astro.props;
+const initials = brand.name
+  .replace(/\([^)]*\)/g, '')
+  .split(/[\s/&-]+/)
+  .filter(Boolean)
+  .slice(0, 3)
+  .map((word) => word[0])
+  .join('')
+  .toUpperCase();
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag
+  class:list={['brand-logo-card', compact && 'is-compact']}
+  data-brand-name={brand.name.toLowerCase()}
+  href={href}
+  aria-label={href ? (ariaLabel ?? `View ${brand.name} products and solutions`) : undefined}
+>
+  <span class="brand-logo-visual">
+    {brand.logo
+      ? <img src={brand.logo} alt="" width="120" height="52" loading="lazy" decoding="async" />
+      : <span class="brand-monogram" aria-hidden="true">{initials}</span>}
+  </span>
+  <strong>{brand.name}</strong>
+</Tag>

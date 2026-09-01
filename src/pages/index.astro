@@ -1,0 +1,307 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import BrandLogo from '../components/BrandLogo.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import { heroSlides, projects, governmentOrganizations, commercialOrganizations, site } from '../data/site';
+import { services } from '../data/services';
+import { brands } from '../data/brands';
+import { getBrandPage } from '../data/brand-pages';
+
+function brandHref(slug: string) {
+  return getBrandPage(slug)?.status === 'published' ? `/brands/${slug}/` : undefined;
+}
+
+const brandMidpoint = Math.ceil(brands.length / 2);
+const brandRows = [brands.slice(0, brandMidpoint), brands.slice(brandMidpoint)];
+const heroSecondaryLabels = ['Explore Construction Services', 'Explore Telecom & IT', 'Explore Structures & Projects'];
+
+const homeFaqs = [
+  { question: 'What services does Zenith Line provide in Kuwait?', answer: 'Zenith Line provides construction, civil works, K-Span and shade structures, HVAC, telecom, IT, trading, technical supply, logistics and engineering manpower services for project requirements in Kuwait.' },
+  { question: 'How can I request a project quotation?', answer: 'Send your contact details, required service, Kuwait area and a clear scope through the enquiry form or WhatsApp. Zenith Line will review the requirement and confirm the appropriate quotation process.' },
+  { question: 'Does Zenith Line arrange site visits in Kuwait?', answer: 'Site visits can be arranged when the project scope requires a survey or on-site review. Timing and availability are confirmed after the initial requirement and location are assessed.' },
+  { question: 'Can I send drawings, specifications or a BOQ?', answer: 'Yes. Drawings, technical specifications, photographs and bills of quantity can be shared to help the team review construction, technology and supply requirements accurately.' },
+  { question: 'Can Zenith Line source a specific technology brand or model?', answer: 'You can request a preferred brand, model and quantity. Product compatibility, availability and sourcing conditions are confirmed during technical review and quotation.' },
+  { question: 'Which areas of Kuwait does Zenith Line serve?', answer: 'Zenith Line coordinates requirements across Kuwait. Service availability, site access and scheduling are confirmed for each project after reviewing its location and scope.' }
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  '@id': `${site.domain}/#faq`,
+  mainEntity: homeFaqs.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: { '@type': 'Answer', text: item.answer }
+  }))
+};
+---
+
+<BaseLayout
+  title="Zenith Line Kuwait | Construction, Engineering, Telecom & Supply"
+  description="Zenith Line provides construction, civil, K-Span, HVAC, structured cabling, IT, telecom, trading, supply and engineering services across Kuwait."
+  schema={faqSchema}
+>
+  <section class="hero-slider" aria-roledescription="carousel" aria-label="Zenith Line capabilities" data-slider>
+    {heroSlides.map((slide, index) => (
+      <article class:list={["hero-slide", index === 0 && "is-active"]} data-slide aria-hidden={index !== 0 ? 'true' : 'false'} inert={index !== 0}>
+        <div class="hero-grid-pattern" aria-hidden="true"></div>
+        <div class="container hero-content hero-layout">
+          <div class="hero-copy">
+            <span class="eyebrow">{slide.eyebrow}</span>
+            {index === 0 ? <h1>{slide.title}</h1> : <h2>{slide.title}</h2>}
+            <p>{slide.text}</p>
+            <div class="hero-actions">
+              <a class="button hero-primary-cta" href={`https://wa.me/${site.phoneRaw}?text=${encodeURIComponent(slide.whatsapp)}`} target="_blank" rel="noopener noreferrer">WhatsApp Project Enquiry <span aria-hidden="true">↗</span></a>
+              <a class="button button-outline-light hero-secondary-cta" href={slide.primary.href}>{heroSecondaryLabels[index]} <span aria-hidden="true">→</span></a>
+            </div>
+            <p class="hero-reassurance">Share your requirement, Kuwait location and preferred service.</p>
+            <div class="hero-proof"><span>Kuwait-based company</span><span>Multi-disciplinary team</span><span>Supply, execution & support</span></div>
+          </div>
+          <div class="hero-visual">
+            <div class="hero-media">
+              <img src={slide.image} alt={slide.alt} width="1200" height="1000" loading={index === 0 ? 'eager' : 'lazy'} fetchpriority={index === 0 ? 'high' : 'auto'} decoding="async" />
+            </div>
+            <div class="hero-image-meta">
+              <span>{String(index + 1).padStart(2, '0')} / {String(heroSlides.length).padStart(2, '0')}</span>
+              <strong>{index === 0 ? 'CONSTRUCTION' : index === 1 ? 'TELECOM & IT' : 'STRUCTURES'}</strong>
+            </div>
+            <span class="hero-corner hero-corner-one" aria-hidden="true"></span>
+            <span class="hero-corner hero-corner-two" aria-hidden="true"></span>
+          </div>
+        </div>
+      </article>
+    ))}
+    <div class="slider-controls">
+      <div class="container slider-control-inner">
+        <div class="slider-dots" role="tablist" aria-label="Choose hero slide">
+          {heroSlides.map((slide, index) => <button class="slider-dot" type="button" aria-label={`Show slide ${index + 1}: ${slide.title}`} aria-current={index === 0 ? 'true' : 'false'} data-slide-dot={index}></button>)}
+        </div>
+        <div class="slider-arrows">
+          <button class="slider-arrow" type="button" aria-label="Previous slide" data-slide-prev>←</button>
+          <button class="slider-arrow" type="button" aria-label="Next slide" data-slide-next>→</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="trust-strip" aria-label="Company strengths">
+    <div class="container trust-grid">
+      <div class="trust-item"><strong>Integrated Delivery</strong><span>Engineering, supply and execution</span></div>
+      <div class="trust-item"><strong>Kuwait Coverage</strong><span>Government, commercial and private sectors</span></div>
+      <div class="trust-item"><strong>Multi-Disciplinary</strong><span>Civil, MEP, telecom and IT capability</span></div>
+      <div class="trust-item"><strong>Project Focus</strong><span>Quality, safety and accountable handover</span></div>
+    </div>
+  </section>
+
+  <section class="brand-showcase" aria-labelledby="brand-showcase-title">
+    <div class="container brand-showcase-head reveal">
+      <div>
+        <span class="eyebrow">GLOBAL TECHNOLOGY ECOSYSTEM</span>
+        <h2 id="brand-showcase-title">Brands Across Our Supply & Solution Portfolio</h2>
+      </div>
+      <div>
+        <p>Recognized manufacturers across networking, cabling, security, communications, power and enterprise technology—sourced according to project requirements and availability.</p>
+        <a class="text-link" href="/brands/">Explore all {brands.length} brands <span>→</span></a>
+      </div>
+    </div>
+    <div class="brand-marquee-stack" aria-label="Featured technology brands">
+      {brandRows.map((row, rowIndex) => (
+        <div class:list={['logo-marquee', rowIndex === 1 && 'is-reverse']} tabindex="0" aria-label={`Technology brands row ${rowIndex + 1}. Focus or hover to pause.`}>
+          <div class="logo-track">
+            <div class="logo-sequence">{row.map((brand) => <BrandLogo brand={brand} compact href={brandHref(brand.slug)} />)}</div>
+            <div class="logo-sequence" aria-hidden="true">{row.map((brand) => <BrandLogo brand={brand} compact />)}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="container brand-disclaimer">
+      <span>Brand availability depends on specification, sourcing and manufacturer channel conditions.</span>
+      <a href="/contact/#enquiry">Request a specific brand <b>↗</b></a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <div><span class="eyebrow">A COMPLETE PROJECT PARTNER</span><h2>One Company. Multiple Engineering Disciplines.</h2></div>
+        <p>Zenith Line brings construction, structures, HVAC, telecom, IT, trading, logistics and technical resources together—helping clients coordinate complex requirements through one accountable team.</p>
+      </div>
+      <div class="division-grid">
+        <article class="division-card reveal"><span>01</span><h3>Construction & Civil</h3><p>Building construction, renovation, roads, infrastructure, interiors, painting, flooring and specialized civil works.</p><a href="/services/?category=Construction">Explore construction →</a></article>
+        <article class="division-card reveal"><span>02</span><h3>Structures & HVAC</h3><p>K-Span structures, custom shades, steel fabrication, equipment shelters and HVAC project services.</p><a href="/services/?category=Structures">Explore structures →</a></article>
+        <article class="division-card reveal"><span>03</span><h3>Telecom & IT</h3><p>Networks, structured cabling, Wi-Fi, PBX, VoIP, CCTV, security, automation and installation support.</p><a href="/services/?category=Telecom%20%26%20IT">Explore technology →</a></article>
+        <article class="division-card reveal"><span>04</span><h3>Trading & Support</h3><p>Import/export, technical supply, Kuwait-wide logistics, engineering resources, tools and equipment.</p><a href="/services/?category=Trading%20%26%20Support">Explore trading →</a></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-ivory">
+    <div class="container">
+      <div class="section-head reveal">
+        <div><span class="eyebrow">OUR SERVICES</span><h2>Capabilities Built Around Real Project Needs</h2></div>
+        <div><p>Every Zenith Line service is presented with equal importance and a direct route to discuss the requirement with our Kuwait team.</p><a class="text-link" href="/services/">View all 16 services <span>→</span></a></div>
+      </div>
+      <div class="services-grid">
+        {services.slice(0, 8).map((service, index) => <ServiceCard service={service} index={index} />)}
+      </div>
+      <div style="margin-top:38px;text-align:center"><a class="button button-secondary" href="/services/">Explore All Services</a></div>
+    </div>
+  </section>
+
+  <section class="section section-dark home-why">
+    <div class="container why-layout">
+      <div class="why-visual reveal">
+        <img src="/images/construction-frame.webp" alt="Steel construction frame during project execution" width="1200" height="900" loading="lazy" decoding="async" />
+        <span>Project-led coordination across disciplines</span>
+      </div>
+      <div class="why-content">
+        <div class="why-intro reveal">
+          <span class="eyebrow">WHY ZENITH LINE</span>
+          <h2>Built on Integrity, Technical Capability and Quality</h2>
+          <p>Our approach is to understand the requirement, organize the right disciplines and execute the approved scope with clear coordination from start to handover.</p>
+        </div>
+        <div class="why-advantages">
+          <article class="why-card reveal" style="--delay:70ms"><span>01</span><h3>Integrated Expertise</h3><p>Civil, mechanical, electrical, telecom and IT capabilities aligned within one project environment.</p></article>
+          <article class="why-card reveal" style="--delay:140ms"><span>02</span><h3>Quality Commitment</h3><p>Attention to materials, installation quality, finishing and the details that affect long-term performance.</p></article>
+          <article class="why-card reveal" style="--delay:210ms"><span>03</span><h3>Practical Innovation</h3><p>Modern equipment and methods selected around the actual project, operational need and available budget.</p></article>
+          <article class="why-card reveal" style="--delay:280ms"><span>04</span><h3>Long-Term Relationships</h3><p>Responsive communication and accountable coordination designed to support lasting client partnerships.</p></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section home-process">
+    <div class="container">
+      <div class="section-head reveal">
+        <div><span class="eyebrow">HOW WE WORK</span><h2>A Clear Route from Requirement to Handover</h2></div>
+        <p>The exact stages vary by discipline, but every project begins with understanding the site and ends with an agreed handover.</p>
+      </div>
+      <div class="home-timeline">
+        <article class="timeline-step reveal" style="--delay:0ms"><span class="timeline-marker">01</span><div><h3>Consult & Survey</h3><p>Review the requirement, drawings, site conditions, programme and intended outcome.</p></div></article>
+        <article class="timeline-step reveal" style="--delay:80ms"><span class="timeline-marker">02</span><div><h3>Define the Solution</h3><p>Develop the scope, selected method or equipment, responsibilities and commercial proposal.</p></div></article>
+        <article class="timeline-step reveal" style="--delay:160ms"><span class="timeline-marker">03</span><div><h3>Execute & Coordinate</h3><p>Mobilize the required team, materials and technical disciplines for controlled execution.</p></div></article>
+        <article class="timeline-step reveal" style="--delay:240ms"><span class="timeline-marker">04</span><div><h3>Test & Handover</h3><p>Complete agreed inspections, testing, documentation and project close-out activities.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-ivory">
+    <div class="container">
+      <div class="section-head reveal">
+        <div><span class="eyebrow">SELECTED WORK</span><h2>Project Experience Across Kuwait</h2></div>
+        <div><p>Representative work across structures, infrastructure, interiors and technology. Client names and detailed scopes are published only when approved.</p></div>
+      </div>
+      <div class="projects-grid home-projects-grid">
+        {projects.slice(0, 6).map((project, index) => <article class="project-card home-project-card reveal" tabindex="0"><img src={project.image} alt={project.title} width="900" height="600" loading="lazy" decoding="async" class={`project-image-${index + 1}`} /><div class="project-card-content"><small>{project.category}</small><h3>{project.title}</h3><p>{project.text}</p><span class="project-arrow" aria-hidden="true">↗</span></div></article>)}
+      </div>
+      <div class="portfolio-action reveal"><a class="button button-secondary" href="/projects/">Explore Project Portfolio <span aria-hidden="true">→</span></a></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head centered reveal"><span class="eyebrow">SECTORS & ORGANIZATIONS</span><h2>Experience Referenced Across Public and Private Sectors</h2><p>Organization references come from the Zenith Line company profile. Display does not automatically imply an exclusive partnership or current contract.</p></div>
+      <div class="organization-groups">
+        <article class="organization-panel reveal">
+          <div class="organization-heading"><span aria-hidden="true">01</span><div><small>PORTFOLIO REFERENCES</small><h3>Government & Public Sector</h3></div></div>
+          <ul>{governmentOrganizations.map((name) => <li>{name}</li>)}</ul>
+        </article>
+        <article class="organization-panel reveal" style="--delay:100ms">
+          <div class="organization-heading"><span aria-hidden="true">02</span><div><small>PORTFOLIO REFERENCES</small><h3>Commercial & Private Sector</h3></div></div>
+          <ul>{commercialOrganizations.map((name) => <li>{name}</li>)}</ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-ivory home-faq" aria-labelledby="home-faq-title">
+    <div class="container faq-layout">
+      <div class="faq-intro reveal">
+        <span class="eyebrow">PROJECT ENQUIRY FAQ</span>
+        <h2 id="home-faq-title">Planning a Project in Kuwait?</h2>
+        <p>Practical answers about Zenith Line services, site reviews, quotation requirements and technical sourcing.</p>
+        <a class="text-link" href="/contact/#enquiry">Discuss your requirement <span>→</span></a>
+      </div>
+      <div class="faq-list home-faq-list reveal">
+        {homeFaqs.map((item) => <details><summary>{item.question}</summary><p>{item.answer}</p></details>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark home-enquiry" id="enquiry">
+    <div class="container enquiry-layout">
+      <div class="reveal">
+        <span class="eyebrow">START A CONVERSATION</span>
+        <h2>Tell Us What Your Project Needs</h2>
+        <p style="margin-top:22px">Share the service, Kuwait area and a short requirement. WhatsApp will open with the details ready for you to review and send.</p>
+        <ul class="enquiry-reassurance">
+          <li>Kuwait-based project coordination</li>
+          <li>Drawings and BOQs accepted</li>
+          <li>Construction, technology and supply enquiries</li>
+        </ul>
+        <div class="contact-details">
+          <div class="contact-detail"><small>Primary contact</small><a href={`tel:+${site.phoneRaw}`} style="color:white">{site.phoneDisplay}</a></div>
+          <div class="contact-detail"><small>Email</small><a href={`mailto:${site.email}`} style="color:white">{site.email}</a></div>
+          <div class="contact-detail"><small>Office</small><span style="color:white">{site.address}</span></div>
+        </div>
+      </div>
+      <div class="reveal"><EnquiryForm compact /></div>
+    </div>
+  </section>
+
+  <a class="floating-whatsapp" data-floating-whatsapp href={`https://wa.me/${site.phoneRaw}?text=${encodeURIComponent('Hello Zenith Line, I would like to discuss a project requirement in Kuwait.')}`} target="_blank" rel="noopener noreferrer" aria-label="Start a Zenith Line project enquiry on WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .3 5.3.3 11.8c0 2.1.6 4.2 1.6 6L.2 24l6.3-1.7a11.8 11.8 0 0 0 5.6 1.4h.1c6.5 0 11.8-5.3 11.8-11.8 0-3.2-1.3-6.2-3.5-8.4Zm-8.4 18.2c-1.7 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4a9.7 9.7 0 1 1 8.3 4.6Zm5.3-7.2c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-1.7-.9-2.9-1.6-4-3.6-.3-.6.3-.6.8-1.3.1-.2.1-.4 0-.6 0-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.3 3.4 1.4 3.6c.2.2 2.5 3.8 6 5.3.8.4 1.5.6 2 .7.9.3 1.7.2 2.3.1.7-.1 2.2-.9 2.5-1.8.3-.9.3-1.6.2-1.8-.1-.2-.3-.3-.6-.4Z" /></svg>
+    <span>Project Enquiry</span>
+  </a>
+
+  <script>
+    const slider = document.querySelector<HTMLElement>('[data-slider]');
+    if (slider && slider.dataset.ready !== 'true') {
+      slider.dataset.ready = 'true';
+      const slides = [...slider.querySelectorAll<HTMLElement>('[data-slide]')];
+      const dots = [...slider.querySelectorAll<HTMLButtonElement>('[data-slide-dot]')];
+      const previous = slider.querySelector<HTMLButtonElement>('[data-slide-prev]');
+      const next = slider.querySelector<HTMLButtonElement>('[data-slide-next]');
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let current = 0;
+      let timer: number | undefined;
+      const show = (index: number) => {
+        current = (index + slides.length) % slides.length;
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('is-active', i === current);
+          slide.setAttribute('aria-hidden', String(i !== current));
+          slide.inert = i !== current;
+        });
+        dots.forEach((dot, i) => dot.setAttribute('aria-current', String(i === current)));
+      };
+      const stop = () => { if (timer) window.clearInterval(timer); };
+      const start = () => {
+        stop();
+        if (!reduced) timer = window.setInterval(() => show(current + 1), 7000);
+      };
+      dots.forEach((dot, index) => dot.addEventListener('click', () => { show(index); start(); }));
+      previous?.addEventListener('click', () => { show(current - 1); start(); });
+      next?.addEventListener('click', () => { show(current + 1); start(); });
+      slider.addEventListener('mouseenter', stop);
+      slider.addEventListener('mouseleave', start);
+      slider.addEventListener('focusin', stop);
+      slider.addEventListener('focusout', start);
+      document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+      start();
+    }
+
+    const floatingWhatsApp = document.querySelector<HTMLElement>('[data-floating-whatsapp]');
+    const enquirySection = document.querySelector<HTMLElement>('#enquiry');
+    const footer = document.querySelector<HTMLElement>('.site-footer');
+    if (floatingWhatsApp && 'IntersectionObserver' in window) {
+      const covered = new Set<Element>();
+      const visibilityObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => entry.isIntersecting ? covered.add(entry.target) : covered.delete(entry.target));
+        floatingWhatsApp.classList.toggle('is-hidden', covered.size > 0);
+      }, { threshold: 0.02 });
+      if (enquirySection) visibilityObserver.observe(enquirySection);
+      if (footer) visibilityObserver.observe(footer);
+    }
+  </script>
+</BaseLayout>

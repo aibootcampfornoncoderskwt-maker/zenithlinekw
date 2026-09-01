@@ -1,0 +1,54 @@
+---
+import { site } from '../data/site';
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a class="brand brand-light" href="/">
+        <span class="brand-mark"><img src="/images/zenith-logo.png" alt="" width="48" height="48" /></span>
+        <span class="brand-copy"><strong>ZENITH LINE</strong><small>Building strength. Shaping the future.</small></span>
+      </a>
+      <p>{site.description}</p>
+      <a class="text-link light" href="/downloads/zenith-line-company-profile-2025.pdf" download>Download company profile ↗</a>
+    </div>
+    <div>
+      <h2>Company</h2>
+      <a href="/about/">About Zenith Line</a>
+      <a href="/services/">All Services</a>
+      <a href="/products-supply/">Products & Supply</a>
+      <a href="/brands/">Brands</a>
+      <a href="/projects/">Projects</a>
+      <a href="/company-profile/">Company Profile</a>
+    </div>
+    <div>
+      <h2>Core Services</h2>
+      <a href="/services/construction-renovation/">Construction & Renovation</a>
+      <a href="/services/k-span-structures/">K-Span Structures</a>
+      <a href="/services/structured-cabling/">Structured Cabling</a>
+      <a href="/services/hvac-services/">HVAC Services</a>
+      <a href="/services/supply-logistics/">Supply & Logistics</a>
+    </div>
+    <div class="footer-contact">
+      <h2>Contact</h2>
+      <a href={`tel:+${site.phoneRaw}`}>{site.phoneDisplay}</a>
+      {site.alternatePhones.map((phone) => <span>{phone}</span>)}
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+      <p>{site.address}</p>
+      <a
+        class="button button-small footer-whatsapp"
+        href={`https://wa.me/${site.phoneRaw}?text=${encodeURIComponent('Hello Zenith Line, I would like to discuss a project requirement in Kuwait.')}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Start a Zenith Line project enquiry on WhatsApp"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .3 5.3.3 11.8c0 2.1.6 4.2 1.6 6L.2 24l6.3-1.7a11.8 11.8 0 0 0 5.6 1.4h.1c6.5 0 11.8-5.3 11.8-11.8 0-3.2-1.3-6.2-3.5-8.4Zm-8.4 18.2c-1.7 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4a9.7 9.7 0 1 1 8.3 4.6Zm5.3-7.2c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-1.7-.9-2.9-1.6-4-3.6-.3-.6.3-.6.8-1.3.1-.2.1-.4 0-.6 0-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.3 3.4 1.4 3.6c.2.2 2.5 3.8 6 5.3.8.4 1.5.6 2 .7.9.3 1.7.2 2.3.1.7-.1 2.2-.9 2.5-1.8.3-.9.3-1.6.2-1.8-.1-.2-.3-.3-.6-.4Z" /></svg>
+        <span>WhatsApp Enquiry</span>
+      </a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© {new Date().getFullYear()} Zenith Line Co. All rights reserved.</span>
+    <div><a href="/privacy/">Privacy</a><a href="/sitemap-visual/">Sitemap</a></div>
+  </div>
+</footer>

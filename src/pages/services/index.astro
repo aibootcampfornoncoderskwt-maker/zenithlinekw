@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import { categories, services } from '../../data/services';
+---
+
+<BaseLayout title="All Construction, Engineering, Telecom & Trading Services" description="Explore all Zenith Line services in Kuwait including construction, civil, K-Span, HVAC, telecom, IT, cabling, trading, supply and manpower.">
+  <PageHero eyebrow="ALL CAPABILITIES" title="Services Built for Kuwait Projects" text="Sixteen equally represented services across construction, structures, MEP, telecom, IT, trading and project support—each with its own scope and direct enquiry route." crumbs={[{ label: 'Home', href: '/' }, { label: 'Services' }]} />
+  <section class="section">
+    <div class="container">
+      <div class="filter-bar" aria-label="Filter services by category">
+        {categories.map((category, index) => <button class="filter-button" type="button" aria-pressed={index === 0 ? 'true' : 'false'} data-category={category}>{category}</button>)}
+      </div>
+      <div class="services-grid" data-services-grid>
+        {services.map((service, index) => <div data-service-category={service.category}><ServiceCard service={service} index={index} /></div>)}
+      </div>
+    </div>
+  </section>
+  <section class="cta-band"><div class="container cta-grid"><div><h2>Not Sure Which Service Fits Your Requirement?</h2><p>Share the project location, property type and required outcome. Our team can direct the enquiry to the appropriate division.</p></div><div class="cta-actions"><a class="button" href="/contact/#enquiry">Request Guidance</a></div></div></section>
+  <script>
+    const buttons = document.querySelectorAll<HTMLButtonElement>('[data-category]');
+    const cards = document.querySelectorAll<HTMLElement>('[data-service-category]');
+    const selectCategory = (category: string) => {
+      buttons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.category === category)));
+      cards.forEach((card) => card.hidden = category !== 'All' && card.dataset.serviceCategory !== category);
+    };
+    buttons.forEach((button) => button.addEventListener('click', () => selectCategory(button.dataset.category || 'All')));
+    const requested = new URLSearchParams(window.location.search).get('category');
+    if (requested && [...buttons].some((button) => button.dataset.category === requested)) selectCategory(requested);
+  </script>
+</BaseLayout>
