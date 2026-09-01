@@ -77,8 +77,6 @@ const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
         window.setTimeout(clearSplash, 2400);
 
         try {
-          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
           let alreadyShown = false;
           try {
             alreadyShown = sessionStorage.getItem('zenithSplashShown') === 'true';
@@ -116,39 +114,70 @@ const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
       (() => {
         const header = document.querySelector('[data-header]');
         const toggle = document.querySelector('[data-menu-toggle]');
+        const toggleLabel = document.querySelector('[data-menu-label]');
         const menu = document.querySelector('[data-menu]');
         const backdrop = document.querySelector('[data-menu-backdrop]');
-        const dropdownToggles = document.querySelectorAll('[data-dropdown-toggle]');
-        const closeMenu = () => {
-          if (!toggle || !menu) return;
-          toggle.setAttribute('aria-expanded', 'false');
-          menu.classList.remove('is-open');
-          backdrop?.classList.remove('is-visible');
-          document.body.classList.remove('menu-open');
+        const desktopDropdownToggles = document.querySelectorAll('[data-desktop-dropdown-toggle]');
+        const mobileServicesToggle = document.querySelector('[data-mobile-services-toggle]');
+        const mobileServicesPanel = document.querySelector('[data-mobile-services-panel]');
+        const mobileQuery = window.matchMedia('(max-width: 1080px)');
+
+        const setMobileServices = (open) => {
+          mobileServicesToggle?.setAttribute('aria-expanded', String(open));
+          if (mobileServicesPanel instanceof HTMLElement) mobileServicesPanel.hidden = !open;
         };
+
+        const syncDrawerTop = () => {
+          if (!(header instanceof HTMLElement) || !mobileQuery.matches) return;
+          document.documentElement.style.setProperty('--mobile-drawer-top', `${Math.round(header.getBoundingClientRect().bottom)}px`);
+        };
+
+        const setMenuState = (open, restoreFocus = false) => {
+          if (!(toggle instanceof HTMLElement) || !(menu instanceof HTMLElement)) return;
+          const nextOpen = mobileQuery.matches && open;
+          if (nextOpen) syncDrawerTop();
+          toggle.setAttribute('aria-expanded', String(nextOpen));
+          toggle.setAttribute('aria-label', nextOpen ? 'Close navigation' : 'Open navigation');
+          if (toggleLabel) toggleLabel.textContent = nextOpen ? 'Close navigation' : 'Open navigation';
+          menu.classList.toggle('is-open', nextOpen);
+          menu.inert = mobileQuery.matches && !nextOpen;
+          if (mobileQuery.matches) menu.setAttribute('aria-hidden', String(!nextOpen));
+          else menu.removeAttribute('aria-hidden');
+          backdrop?.classList.toggle('is-visible', nextOpen);
+          document.body.classList.toggle('menu-open', nextOpen);
+          if (!nextOpen) setMobileServices(false);
+          if (restoreFocus) toggle.focus();
+        };
+
         toggle?.addEventListener('click', () => {
           const open = toggle.getAttribute('aria-expanded') === 'true';
-          toggle.setAttribute('aria-expanded', String(!open));
-          menu?.classList.toggle('is-open', !open);
-          backdrop?.classList.toggle('is-visible', !open);
-          document.body.classList.toggle('menu-open', !open);
+          setMenuState(!open);
+          if (!open) window.requestAnimationFrame(() => menu?.querySelector('a')?.focus());
         });
-        dropdownToggles.forEach((button) => button.addEventListener('click', () => {
+
+        mobileServicesToggle?.addEventListener('click', () => {
+          const open = mobileServicesToggle.getAttribute('aria-expanded') === 'true';
+          setMobileServices(!open);
+        });
+
+        desktopDropdownToggles.forEach((button) => button.addEventListener('click', () => {
           const open = button.getAttribute('aria-expanded') === 'true';
-          dropdownToggles.forEach((item) => item.setAttribute('aria-expanded', 'false'));
+          desktopDropdownToggles.forEach((item) => item.setAttribute('aria-expanded', 'false'));
           button.setAttribute('aria-expanded', String(!open));
         }));
 
         const DROPDOWN_CLOSE_DELAY = 180;
         let dropdownCloseTimer;
         document.querySelectorAll('.nav-dropdown').forEach((dropdown) => {
-          const trigger = dropdown.querySelector('[data-dropdown-toggle]');
+          const trigger = dropdown.querySelector('[data-desktop-dropdown-toggle]');
           if (!trigger) return;
           const openDropdown = () => {
+            if (mobileQuery.matches) return;
             window.clearTimeout(dropdownCloseTimer);
-            dropdownToggles.forEach((item) => item.setAttribute('aria-expanded', String(item === trigger)));
+            desktopDropdownToggles.forEach((item) => item.setAttribute('aria-expanded', String(item === trigger)));
           };
           const scheduleClose = () => {
+            if (mobileQuery.matches) return;
             window.clearTimeout(dropdownCloseTimer);
             dropdownCloseTimer = window.setTimeout(() => trigger.setAttribute('aria-expanded', 'false'), DROPDOWN_CLOSE_DELAY);
           };
@@ -162,24 +191,51 @@ const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
 
         document.addEventListener('click', (event) => {
           if (!(event.target instanceof Element)) return;
-          if (!event.target.closest('.nav-dropdown')) dropdownToggles.forEach((button) => button.setAttribute('aria-expanded', 'false'));
-          if (!event.target.closest('.header-inner')) closeMenu();
+          if (!event.target.closest('.nav-dropdown')) desktopDropdownToggles.forEach((button) => button.setAttribute('aria-expanded', 'false'));
         });
-        backdrop?.addEventListener('click', closeMenu);
+
+        menu?.addEventListener('click', (event) => {
+          if (mobileQuery.matches && event.target instanceof Element && event.target.closest('a')) setMenuState(false);
+        });
+        backdrop?.addEventListener('click', () => setMenuState(false, true));
+
         document.addEventListener('keydown', (event) => {
-          if (event.key !== 'Escape') return;
-          const openToggle = Array.from(dropdownToggles).find((button) => button.getAttribute('aria-expanded') === 'true');
-          if (openToggle) {
-            openToggle.setAttribute('aria-expanded', 'false');
-            openToggle.focus();
+          const menuOpen = toggle?.getAttribute('aria-expanded') === 'true';
+          if (event.key === 'Escape') {
+            if (menuOpen) {
+              event.preventDefault();
+              setMenuState(false, true);
+              return;
+            }
+            const openToggle = Array.from(desktopDropdownToggles).find((button) => button.getAttribute('aria-expanded') === 'true');
+            if (openToggle instanceof HTMLElement) {
+              openToggle.setAttribute('aria-expanded', 'false');
+              openToggle.focus();
+            }
             return;
           }
-          closeMenu();
+
+          if (event.key !== 'Tab' || !menuOpen || !(toggle instanceof HTMLElement) || !(menu instanceof HTMLElement)) return;
+          const focusable = [toggle, ...menu.querySelectorAll('a, button')].filter((item) => item instanceof HTMLElement && item.offsetParent !== null && !item.hasAttribute('disabled'));
+          const first = focusable[0];
+          const last = focusable[focusable.length - 1];
+          if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last?.focus();
+          } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first?.focus();
+          }
         });
-        window.addEventListener('resize', () => {
-          if (window.innerWidth > 1080) closeMenu();
-        }, { passive: true });
+
+        const syncMenuBreakpoint = () => {
+          if (!mobileQuery.matches) desktopDropdownToggles.forEach((button) => button.setAttribute('aria-expanded', 'false'));
+          setMenuState(false);
+        };
+        mobileQuery.addEventListener('change', syncMenuBreakpoint);
+        window.addEventListener('resize', syncDrawerTop, { passive: true });
         window.addEventListener('scroll', () => header?.classList.toggle('is-scrolled', window.scrollY > 60), { passive: true });
+        syncMenuBreakpoint();
 
         const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const reveals = document.querySelectorAll('.reveal');

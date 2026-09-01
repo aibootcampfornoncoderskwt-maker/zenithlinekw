@@ -23,8 +23,8 @@ const whatsappUrl = `https://wa.me/${site.phoneRaw}?text=${encodeURIComponent('H
       <span class="brand-copy"><strong>ZENITH LINE <i>CO.</i></strong><small>CONTRACTING · TECHNOLOGY · SUPPLY</small></span>
     </a>
 
-    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-navigation" data-menu-toggle>
-      <span></span><span></span><span></span><span class="sr-only">Open navigation</span>
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="main-navigation" data-menu-toggle>
+      <span></span><span></span><span></span><span class="sr-only" data-menu-label>Open navigation</span>
     </button>
 
     <nav class="main-nav" id="main-navigation" aria-label="Main navigation" data-menu>
@@ -34,10 +34,10 @@ const whatsappUrl = `https://wa.me/${site.phoneRaw}?text=${encodeURIComponent('H
       </div>
       <a class:list={[active('/') && 'is-active']} href="/">Home</a>
       <div class="nav-dropdown">
-        <button class:list={[active('/services/') && 'is-active']} type="button" aria-expanded="false" aria-controls="services-mega-menu" data-dropdown-toggle>
+        <button class:list={['desktop-services-toggle', active('/services/') && 'is-active']} type="button" aria-expanded="false" aria-controls="services-mega-menu" data-desktop-dropdown-toggle>
           Services <span class="chevron" aria-hidden="true"></span>
         </button>
-        <div class="dropdown-panel" id="services-mega-menu">
+        <div class="dropdown-panel desktop-mega-menu" id="services-mega-menu">
           <a class="mega-overview" href="/services/">
             <small>ALL CAPABILITIES</small>
             <strong>One accountable partner across every project discipline.</strong>
@@ -68,6 +68,37 @@ const whatsappUrl = `https://wa.me/${site.phoneRaw}?text=${encodeURIComponent('H
             <a href="/services/engineering-manpower/">Engineering & Manpower</a>
             <a href="/services/tools-equipment-rental/">Tools & Equipment</a>
             <a class="view-all-link" href="/company-profile/">Company profile <span>↗</span></a>
+          </div>
+        </div>
+        <button class:list={['mobile-services-toggle', active('/services/') && 'is-active']} type="button" aria-expanded="false" aria-controls="mobile-services-submenu" data-mobile-services-toggle>
+          Services <span class="chevron" aria-hidden="true"></span>
+        </button>
+        <div class="mobile-services-panel" id="mobile-services-submenu" data-mobile-services-panel hidden>
+          <a class="mobile-services-overview" href="/services/">Explore all 16 services <span aria-hidden="true">→</span></a>
+          <div class="mobile-services-group">
+            <strong>Construction & Structures</strong>
+            <a href="/services/construction-renovation/">Construction & Renovation</a>
+            <a href="/services/civil-road-works/">Civil & Road Works</a>
+            <a href="/services/k-span-structures/">K-Span Structures</a>
+            <a href="/services/shade-structures/">Shade Structures</a>
+            <a href="/services/hvac-services/">HVAC Services</a>
+            <a href="/services/specialized-civil-services/">Specialized Civil Services</a>
+          </div>
+          <div class="mobile-services-group">
+            <strong>Telecom & IT</strong>
+            <a href="/services/router-wifi/">Router & Wi-Fi</a>
+            <a href="/services/structured-cabling/">Structured Cabling</a>
+            <a href="/services/voip-voice/">VoIP & Voice</a>
+            <a href="/services/pbx-telephone-exchange/">PBX / Telephone Exchange</a>
+            <a href="/services/network-security/">Network Security</a>
+            <a href="/services/installation-support/">Installation & Support</a>
+          </div>
+          <div class="mobile-services-group">
+            <strong>Trading & Support</strong>
+            <a href="/services/import-export/">Import / Export</a>
+            <a href="/services/supply-logistics/">Supply & Logistics</a>
+            <a href="/services/engineering-manpower/">Engineering & Manpower</a>
+            <a href="/services/tools-equipment-rental/">Tools & Equipment</a>
           </div>
         </div>
       </div>
