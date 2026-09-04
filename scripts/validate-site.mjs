@@ -136,8 +136,20 @@ for (const file of htmlFiles) {
   for (const obsolete of OBSOLETE_NUMBERS) {
     if (html.includes(obsolete)) problems.push(`${relative}: obsolete phone number ${obsolete} found in page output`);
   }
-  for (const match of html.matchAll(/wa\.me\/(\d+)/g)) {
-    if (match[1] !== WHATSAPP_RAW) problems.push(`${relative}: wa.me link uses unapproved number ${match[1]} (expected ${WHATSAPP_RAW})`);
+  // Every wa.me link must use the primary WhatsApp enquiry number, with one narrow, explicit
+  // exception: the top utility-bar's WhatsApp icon, which the client has confirmed intentionally
+  // reuses the call number (it accepts both calls and WhatsApp messages). That element is marked
+  // with data-utility-contact="whatsapp" specifically so this exception cannot silently widen to
+  // enquiry forms, brand CTAs, or any other principal WhatsApp conversion link.
+  for (const anchorMatch of html.matchAll(/<a\s[^>]*href="[^"]*wa\.me\/(\d+)[^"]*"[^>]*>/g)) {
+    const tagHtml = anchorMatch[0];
+    const number = anchorMatch[1];
+    const isUtilityBarCallNumber = tagHtml.includes('data-utility-contact="whatsapp"');
+    if (isUtilityBarCallNumber) {
+      if (number !== CALL_RAW) problems.push(`${relative}: utility-bar WhatsApp icon uses unexpected number ${number} (expected ${CALL_RAW})`);
+    } else if (number !== WHATSAPP_RAW) {
+      problems.push(`${relative}: wa.me link uses unapproved number ${number} (expected ${WHATSAPP_RAW})`);
+    }
   }
   if (html.includes('api.whatsapp.com')) problems.push(`${relative}: unexpected api.whatsapp.com usage — wa.me is the established pattern and no page currently requires the alternative`);
   for (const match of html.matchAll(/href="tel:\+?(\d+)"/g)) {

@@ -1,6 +1,8 @@
 ---
 import { site, contact } from '../data/site';
 import InstagramIcon from './InstagramIcon.astro';
+import PhoneIcon from './PhoneIcon.astro';
+import WhatsAppIcon from './WhatsAppIcon.astro';
 
 const path = Astro.url.pathname;
 const active = (href: string) => href === '/' ? path === '/' : path.startsWith(href);
@@ -11,7 +13,15 @@ const whatsappUrl = `${contact.whatsapp.href}?text=${encodeURIComponent('Hello Z
   <div class="container utility-inner">
     <span class="utility-kicker"><b>KUWAIT</b> Multi-disciplinary contracting, technology & supply</span>
     <div class="utility-links">
-      <a href={contact.call.href} aria-label={`Call Zenith Line on ${contact.call.display}`}><span>Call</span> {contact.call.display}</a>
+      <div class="utility-contact">
+        <a class="utility-icon-link" href={contact.call.href} aria-label={`Call Zenith Line at ${contact.call.display}`}>
+          <PhoneIcon />
+        </a>
+        <a class="utility-icon-link" data-utility-contact="whatsapp" href={`https://wa.me/${contact.call.raw}`} target="_blank" rel="noopener noreferrer" aria-label={`WhatsApp Zenith Line at ${contact.call.display}`}>
+          <WhatsAppIcon />
+        </a>
+        <a class="utility-phone-number" href={contact.call.href}>{contact.call.display}</a>
+      </div>
       <a href={`mailto:${site.email}`}><span>Email</span> {site.email}</a>
     </div>
   </div>

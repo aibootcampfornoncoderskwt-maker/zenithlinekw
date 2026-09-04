@@ -79,10 +79,16 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.55rem); }
 .utility-inner { display: flex; min-height: 36px; align-items: center; justify-content: space-between; gap: 24px; }
 .utility-kicker { display: inline-flex; align-items: center; gap: 10px; }
 .utility-kicker b { padding: 3px 8px; border: 1px solid rgba(201,147,105,.35); border-radius: 999px; color: var(--bronze); font-size: .6rem; letter-spacing: .14em; }
-.utility-links { display: flex; gap: 24px; }
+.utility-links { display: flex; align-items: center; gap: 24px; }
 .utility-links span { margin-right: 7px; color: var(--bronze); font-size: .58rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
 .utility-links a { transition: color .2s ease; }
 .utility-links a:hover { color: white; }
+.utility-contact { display: inline-flex; align-items: center; gap: 8px; }
+.utility-icon-link { display: inline-flex; width: 30px; height: 30px; flex: 0 0 auto; align-items: center; justify-content: center; border-radius: 8px; color: var(--bronze); transition: color .2s ease, background-color .2s ease; }
+.utility-icon-link svg { width: 15px; height: 15px; }
+.utility-icon-link:hover { color: white; background: rgba(255,255,255,.12); }
+.utility-icon-link:focus-visible { outline: 2px solid var(--bronze); outline-offset: 2px; color: white; }
+.utility-phone-number { white-space: nowrap; }
 .site-header { position: sticky; top: 0; z-index: var(--z-header); border-bottom: 1px solid rgba(222,217,210,.68); background: rgba(255,254,252,.94); backdrop-filter: blur(18px) saturate(140%); transition: box-shadow .25s ease, background .25s ease; }
 .site-header.is-scrolled { background: rgba(255,254,252,.985); box-shadow: 0 14px 40px rgba(12,39,43,.09); }
 .header-inner { display: flex; min-height: 82px; align-items: center; justify-content: space-between; gap: 34px; }
@@ -483,6 +489,7 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.55rem); }
   .section { padding: 86px 0; }
   .utility-inner > span { display: none; }
   .utility-inner { justify-content: center; }
+  .utility-icon-link { width: 44px; height: 44px; }
   .header-inner { min-height: var(--mobile-header-height); }
   .header-inner > * { min-width: 0; }
   .menu-toggle { display: flex; min-width: 46px; flex: 0 0 46px; }
@@ -661,6 +668,8 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.55rem); }
 
 @media (max-width: 400px) {
   .hero-copy h1, .hero-copy h2 { font-size: clamp(2.2rem, 10.4vw, 2.6rem); }
+  .utility-links { gap: 6px; font-size: .6rem; }
+  .utility-contact { gap: 4px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
