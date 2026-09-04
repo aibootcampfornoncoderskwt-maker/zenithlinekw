@@ -24,13 +24,22 @@ Office: Mirqab, Kuwait City
 - K-Span and shade structures
 - HVAC services
 - Specialized civil and concrete services
-- Router and business Wi-Fi
-- Structured copper and fibre cabling
-- VoIP, PBX and telephone exchange
-- Network security
-- Network installation and support
 - Import, export, supply and logistics
 - Engineering, manpower, tools and equipment
+
+## Telecom and IT services
+
+- https://zenithlinekw.com/services/telecom-it/ — Telecom and IT service hub
+- https://zenithlinekw.com/services/wired-network/ — fibre and copper wired network routes
+- https://zenithlinekw.com/services/wireless-microwave-networks/ — point-to-point and microwave network links
+- https://zenithlinekw.com/services/structured-cabling/ — structured copper and fibre cabling
+- https://zenithlinekw.com/services/cctv-surveillance-systems/ — CCTV cameras, recording and storage
+- https://zenithlinekw.com/services/pbx-telephone-exchange/ — PBX, IP telephone and business VoIP systems
+- https://zenithlinekw.com/services/door-access-security/ — door access control and security
+- https://zenithlinekw.com/services/public-address-systems/ — paging and public address systems
+- https://zenithlinekw.com/services/router-wifi/ — business Wi-Fi, routers and access points
+- https://zenithlinekw.com/services/network-security/ — firewalls, VPN and network segmentation
+- https://zenithlinekw.com/services/installation-support/ — project-based IT installation and support
 
 ## Brand enquiry pages
 

@@ -4,7 +4,9 @@ import { site } from '../data/site';
 
 interface Props { service: Service; index?: number }
 const { service, index = 0 } = Astro.props;
-const whatsappUrl = `https://wa.me/${site.phoneRaw}?text=${encodeURIComponent(service.whatsapp)}`;
+const canonical = `${site.domain}/services/${service.slug}/`;
+const preparedMessage = `${service.whatsapp.replace(/\nSource page:\s*$/, '')}\nSource page: ${canonical}`;
+const whatsappUrl = `https://wa.me/${site.phoneRaw}?text=${encodeURIComponent(preparedMessage)}`;
 ---
 
 <article class="service-card reveal" style={`--delay:${Math.min(index % 4, 3) * 70}ms`}>

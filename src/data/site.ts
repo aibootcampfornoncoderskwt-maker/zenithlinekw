@@ -31,8 +31,8 @@ export const heroSlides = [
     text: 'Complete telecom and IT delivery covering Wi-Fi, fibre and copper networks, PBX, VoIP, CCTV, security, automation and technical support.',
     image: '/images/network-rack.webp',
     alt: 'Organized network and fibre rack installation',
-    primary: { label: 'View Telecom & IT', href: '/services/structured-cabling/' },
-    whatsapp: 'Hello Zenith Line, I need support with networking, structured cabling, PBX, VoIP or IT security in Kuwait.'
+    primary: { label: 'View Telecom & IT', href: '/services/telecom-it/' },
+    whatsapp: 'Hello Zenith Line, I would like to discuss a Telecom & IT requirement in Kuwait.'
   },
   {
     eyebrow: 'DESIGNED FOR KUWAIT CONDITIONS',

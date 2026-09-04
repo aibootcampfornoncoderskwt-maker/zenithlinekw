@@ -89,7 +89,7 @@ export const securityBrandPages: BrandPage[] = [
       { title: 'Commercial and residential buildings', description: 'Common-area, entrance and parking coverage coordinated with building management requirements.' },
       { title: 'Government and institutional requirements', description: 'Enquiries for public-sector or institutional sites are reviewed against the specific technical and compliance requirements involved.' }
     ],
-    connectedServiceSlugs: ['installation-support', 'structured-cabling', 'supply-logistics', 'network-security'],
+    connectedServiceSlugs: ['cctv-surveillance-systems', 'door-access-security', 'installation-support', 'structured-cabling', 'supply-logistics', 'network-security'],
     selectionFactors: [
       { title: 'Required application', description: 'Indoor, outdoor, low-light or wide-area coverage needs affect which Hikvision camera type is appropriate.' },
       { title: 'Number of cameras and coverage points', description: 'Site size and the number of entry points, aisles or perimeter areas influence the total camera count.' },
@@ -149,7 +149,7 @@ export const securityBrandPages: BrandPage[] = [
       { title: 'Commercial and residential buildings', description: 'Common-area, entrance and parking coverage coordinated with building management requirements.' },
       { title: 'Government and institutional requirements', description: 'Enquiries for public-sector or institutional sites are reviewed against the specific technical and compliance requirements involved.' }
     ],
-    connectedServiceSlugs: ['installation-support', 'structured-cabling', 'supply-logistics', 'network-security'],
+    connectedServiceSlugs: ['cctv-surveillance-systems', 'installation-support', 'structured-cabling', 'supply-logistics', 'network-security'],
     selectionFactors: [
       { title: 'Required application', description: 'Indoor, outdoor, wide-area or high-detail coverage needs affect which Dahua camera type is appropriate.' },
       { title: 'Number of cameras and coverage points', description: 'Site size and the number of entry points, aisles or perimeter areas influence the total camera count.' },
@@ -208,7 +208,7 @@ export const securityBrandPages: BrandPage[] = [
       { title: 'Warehouses and industrial facilities', description: 'Wide-area coverage for storage yards, loading points and industrial operations.' },
       { title: 'Institutional and government requirements', description: 'Enquiries for public-sector or institutional sites are reviewed against the specific technical and compliance requirements involved.' }
     ],
-    connectedServiceSlugs: ['installation-support', 'structured-cabling', 'supply-logistics', 'network-security'],
+    connectedServiceSlugs: ['public-address-systems', 'installation-support', 'structured-cabling', 'supply-logistics', 'network-security'],
     selectionFactors: [
       { title: 'Required application', description: 'Indoor, outdoor or wide-area coverage needs affect which Bosch camera or sensor type is appropriate.' },
       { title: 'Number of coverage points', description: 'Site size and the number of entry points or perimeter areas influence total equipment count.' },
@@ -266,7 +266,7 @@ export const securityBrandPages: BrandPage[] = [
       { title: 'Warehouses and industrial facilities', description: 'Wide-area coverage for storage yards, loading points and industrial operations.' },
       { title: 'Institutional and government requirements', description: 'Enquiries for public-sector or institutional sites are reviewed against the specific technical and compliance requirements involved.' }
     ],
-    connectedServiceSlugs: ['installation-support', 'structured-cabling', 'supply-logistics', 'network-security'],
+    connectedServiceSlugs: ['cctv-surveillance-systems', 'door-access-security', 'installation-support', 'structured-cabling', 'supply-logistics', 'network-security'],
     selectionFactors: [
       { title: 'Required application', description: 'Indoor, outdoor or wide-area coverage needs affect which Honeywell equipment category is appropriate.' },
       { title: 'Number of coverage points', description: 'Site size and the number of entry points or perimeter areas influence total equipment count.' },

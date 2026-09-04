@@ -139,8 +139,15 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .splash-screen, .splash-mark, .splash-ring {
+    .splash-screen, .splash-mark, .splash-ring, .splash-mark img {
       animation: none !important;
+    }
+
+    .splash-screen {
+      transition: opacity 200ms ease !important;
+    }
+
+    .splash-mark, .splash-ring {
       transition: none !important;
     }
 

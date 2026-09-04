@@ -4,7 +4,9 @@
   "redirects": [
     { "source": "/home", "destination": "/", "permanent": true },
     { "source": "/gallery", "destination": "/projects/", "permanent": true },
-    { "source": "/our-divisions", "destination": "/services/", "permanent": true }
+    { "source": "/our-divisions", "destination": "/services/", "permanent": true },
+    { "source": "/services/voip-voice", "destination": "/services/pbx-telephone-exchange/", "permanent": true },
+    { "source": "/services/voip-voice/", "destination": "/services/pbx-telephone-exchange/", "permanent": true }
   ],
   "headers": [
     {

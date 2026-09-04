@@ -129,7 +129,14 @@ const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
 
         const syncDrawerTop = () => {
           if (!(header instanceof HTMLElement) || !mobileQuery.matches) return;
-          document.documentElement.style.setProperty('--mobile-drawer-top', `${Math.round(header.getBoundingClientRect().bottom)}px`);
+          // `.site-header` uses backdrop-filter, which makes it the containing block for its
+          // fixed-position descendants (including this drawer) instead of the viewport. That
+          // splits this into two different measurements: `top` is resolved inside that local
+          // containing block (so it needs the header's own height), while `height` still needs
+          // to reach the true viewport bottom (so it needs the header's absolute position).
+          const headerBottom = header.getBoundingClientRect().bottom;
+          document.documentElement.style.setProperty('--mobile-drawer-top', `${Math.round(header.offsetHeight)}px`);
+          document.documentElement.style.setProperty('--mobile-drawer-height', `${Math.round(window.innerHeight - headerBottom)}px`);
         };
 
         const setMenuState = (open, restoreFocus = false) => {

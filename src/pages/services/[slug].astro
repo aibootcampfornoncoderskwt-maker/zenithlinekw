@@ -16,11 +16,28 @@ interface Props { service: Service }
 const { service } = Astro.props;
 const canonical = `${site.domain}/services/${service.slug}/`;
 const related = service.relatedSlugs.map((slug) => services.find((item) => item.slug === slug)).filter((item): item is Service => Boolean(item));
-const relatedBrands = publishedBrandPages
-  .filter((brandPage) => brandPage.connectedServiceSlugs.includes(service.slug))
-  .map((brandPage) => getBrandBySlug(brandPage.slug))
+const serviceBrandMap: Record<string, string[]> = {
+  'wired-network': ['belden', 'commscope', 'corning', 'panduit', 'gulf-cable'],
+  'wireless-microwave-networks': ['cisco', 'aruba', 'ubiquiti', 'mikrotik'],
+  'structured-cabling': ['belden', 'commscope', 'corning', 'panduit', 'leviton'],
+  'cctv-surveillance-systems': ['hikvision', 'axis-communications', 'honeywell', 'dahua', 'unv-uniview'],
+  'pbx-telephone-exchange': ['avaya', 'grandstream', 'gigaset', 'yealink', 'panasonic'],
+  'door-access-security': ['hikvision', 'zkteco', 'honeywell'],
+  'public-address-systems': ['bosch', 'toa'],
+  'router-wifi': ['cisco', 'aruba', 'tp-link', 'ubiquiti', 'd-link', 'mikrotik'],
+  'network-security': ['fortinet', 'cisco', 'juniper-networks'],
+  'installation-support': ['dell', 'hp', 'apc', 'eaton']
+};
+const publishedBrandSlugs = new Set(publishedBrandPages.map((brandPage) => brandPage.slug));
+const relatedBrands = (serviceBrandMap[service.slug] ?? [])
+  .map((slug) => getBrandBySlug(slug))
   .filter((brand): brand is NonNullable<typeof brand> => Boolean(brand));
-const whatsappUrl = `https://wa.me/${site.phoneRaw}?text=${encodeURIComponent(service.whatsapp)}`;
+const preparedMessage = `${service.whatsapp.replace(/\nSource page:\s*$/, '')}\nSource page: ${canonical}`;
+const whatsappUrl = `https://wa.me/${site.phoneRaw}?text=${encodeURIComponent(preparedMessage)}`;
+const isTelecomService = service.category === 'Telecom & IT';
+const breadcrumbs = isTelecomService
+  ? [{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'Telecom & IT', href: '/services/telecom-it/' }, { label: service.shortTitle }]
+  : [{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: service.shortTitle }];
 const serviceSchema = [
   {
     '@context': 'https://schema.org',
@@ -41,7 +58,8 @@ const serviceSchema = [
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.domain}/` },
       { '@type': 'ListItem', position: 2, name: 'Services', item: `${site.domain}/services/` },
-      { '@type': 'ListItem', position: 3, name: service.shortTitle, item: canonical }
+      ...(isTelecomService ? [{ '@type': 'ListItem', position: 3, name: 'Telecom & IT', item: `${site.domain}/services/telecom-it/` }] : []),
+      { '@type': 'ListItem', position: isTelecomService ? 4 : 3, name: service.shortTitle, item: canonical }
     ]
   },
   {
@@ -62,34 +80,44 @@ const serviceSchema = [
     imageAlt={service.imageAlt}
     imageWidth={service.imageWidth}
     imageHeight={service.imageHeight}
-    crumbs={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: service.shortTitle }]}
+    crumbs={breadcrumbs}
     primaryAction={{ label: service.cta, href: whatsappUrl, ariaLabel: `${service.cta} with Zenith Line on WhatsApp` }}
     secondaryAction={{ label: 'Explore the Scope', href: '#service-scope' }}
-    reassurance="Site assessment • Clear scope • Kuwait-wide coordination"
+    reassurance={service.reassurance ?? 'Site assessment • Clear scope • Kuwait-wide coordination'}
     serviceName={service.shortTitle}
   />
 
-  <section class="service-glance" aria-labelledby="glance-heading">
+  {service.directAnswer && <section class="section service-direct-answer" id="direct-answer" aria-labelledby="direct-answer-heading">
+    <div class="container service-intro-grid">
+      <div><span class="eyebrow">DIRECT ANSWER</span><h2 id="direct-answer-heading">What does {service.shortTitle} cover?</h2></div>
+      <p class="service-lead">{service.directAnswer}</p>
+    </div>
+  </section>}
+
+  <section class="service-glance" id="service-at-a-glance" aria-labelledby="glance-heading">
     <div class="container service-glance-grid">
-      <div><span class="eyebrow">SERVICE AT A GLANCE</span><h2 id="glance-heading">A quick answer for project decision-makers</h2></div>
+      <div><span class="eyebrow">SERVICE AT A GLANCE</span><h2 id="glance-heading">Project essentials for {service.shortTitle}</h2></div>
       <dl>
         <div><dt>Service</dt><dd>{service.shortTitle}</dd></div>
         <div><dt>Service area</dt><dd>Kuwait</dd></div>
         <div><dt>Suitable clients</dt><dd>{service.suitableFor.slice(0, 2).map((item) => item.title).join(', ')}</dd></div>
         <div><dt>Possible scope</dt><dd>{service.scope.slice(0, 3).join(', ')}</dd></div>
+        <div><dt>Main components</dt><dd>{service.mainComponents?.join(', ') ?? service.scope.slice(0, 3).join(', ')}</dd></div>
+        <div><dt>Delivery stages</dt><dd>{service.process.map((item) => item.title).join(', ')}</dd></div>
+        <div><dt>Information to quote</dt><dd>{service.enquiryPrompt}</dd></div>
         <div><dt>Enquiry method</dt><dd>Service-specific WhatsApp message</dd></div>
       </dl>
     </div>
   </section>
 
-  <section class="section section-ivory" aria-labelledby="needs-heading">
+  <section class="section section-ivory" id="customer-problems" aria-labelledby="needs-heading">
     <div class="container">
       <div class="section-head reveal"><div><span class="eyebrow">CUSTOMER NEEDS</span><h2 id="needs-heading">Why customers enquire about {service.shortTitle}</h2></div><p>These are common triggers for an assessment. The actual cause and appropriate response still need to be confirmed from the site and available information.</p></div>
       <div class="service-problem-grid">{service.customerProblems.map((item, index) => <article class="service-problem reveal"><span>{String(index + 1).padStart(2, '0')}</span><h3>{item.title}</h3><p>{item.description}</p></article>)}</div>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="overview-heading">
+  <section class="section" id="service-overview" aria-labelledby="overview-heading">
     <div class="container service-intro-grid">
       <div class="service-editorial reveal">
         <span class="eyebrow">SERVICE OVERVIEW</span>
@@ -117,21 +145,21 @@ const serviceSchema = [
     </div>
   </section>
 
-  <section class="section" aria-labelledby="technical-heading">
+  <section class="section" id="components-technologies" aria-labelledby="technical-heading">
     <div class="container service-technical">
       <figure class="reveal"><img src={service.detailImages[0].src} alt={service.detailImages[0].alt} width={service.detailImages[0].width} height={service.detailImages[0].height} loading="lazy" decoding="async" /><figcaption>{service.detailImages[0].caption}</figcaption></figure>
-      <div class="reveal"><span class="eyebrow">TECHNICAL PERSPECTIVE</span><h2 id="technical-heading">{service.technicalHeading}</h2><p class="service-lead">{service.technicalIntro}</p><ul class="keyword-context" aria-label="Related service topics">{service.secondaryKeywords.map((keyword) => <li>{keyword}</li>)}</ul></div>
+      <div class="reveal"><span class="eyebrow">COMPONENTS AND TECHNOLOGIES</span><h2 id="technical-heading">{service.technicalHeading}</h2><p class="service-lead">{service.technicalIntro}</p>{service.componentsSummary && <p class="service-topic-summary">{service.componentsSummary}</p>}</div>
     </div>
   </section>
 
-  <section class="section section-ivory" aria-labelledby="applications-heading">
+  <section class="section section-ivory" id="applications" aria-labelledby="applications-heading">
     <div class="container">
       <div class="section-head centered reveal"><span class="eyebrow">WHERE IT IS USED</span><h2 id="applications-heading">{service.applicationHeading}</h2></div>
       <div class="application-grid">{service.suitableFor.map((item) => <article class="application-card reveal"><h3>{item.title}</h3><p>{item.description}</p></article>)}</div>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="factors-heading">
+  <section class="section" id="quotation-factors" aria-labelledby="factors-heading">
     <div class="container">
       <div class="section-head reveal"><div><span class="eyebrow">SCOPE AND QUOTATION FACTORS</span><h2 id="factors-heading">{service.considerationsHeading}</h2></div><p>Transparent inputs help Zenith Line distinguish confirmed requirements from assumptions and propose the appropriate next step.</p></div>
       <div class="considerations-grid">{service.considerations.map((item) => <article class="consideration-card reveal"><h3>{item.title}</h3><p>{item.description}</p></article>)}</div>
@@ -139,34 +167,34 @@ const serviceSchema = [
     </div>
   </section>
 
-  <section class="section section-ivory" aria-labelledby="process-heading">
+  <section class="section section-ivory" id="delivery-process" aria-labelledby="process-heading">
     <div class="container">
       <div class="section-head centered reveal"><span class="eyebrow">DELIVERY PROCESS</span><h2 id="process-heading">{service.processHeading}</h2></div>
       <ol class="process-grid">{service.process.map((item) => <li class="process-step reveal"><h3>{item.title}</h3><p>{item.description}</p></li>)}</ol>
     </div>
   </section>
 
-  <section class="section section-dark" aria-labelledby="why-heading">
+  <section class="section section-dark" id="why-zenith-line" aria-labelledby="why-heading">
     <div class="container why-service-layout">
       <div class="reveal"><span class="eyebrow">WHY ZENITH LINE</span><h2 id="why-heading">A Kuwait-based, multi-disciplinary route to a defined scope</h2><p>Zenith Line Co. is based in Mirqab, Kuwait. The trust points below stay within the capabilities and contact information supported by the supplied company profile.</p><a class="text-link light" href="/company-profile/">Review the company profile <span aria-hidden="true">→</span></a></div>
       <div class="why-service-grid">{service.whyZenith.map((item) => <article class="why-service-card reveal"><h3>{item.title}</h3><p>{item.description}</p></article>)}</div>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="faq-heading">
-    <div class="container"><div class="section-head centered reveal"><span class="eyebrow">COMMON QUESTIONS</span><h2 id="faq-heading">Questions before you request a quotation</h2></div><div class="faq-list reveal">{service.faqs.map((faq, index) => <details open={index === 0}><summary>{faq.question}</summary><p>{faq.answer}</p></details>)}</div></div>
+  <section class="section" id="faq" aria-labelledby="faq-heading">
+    <div class="container"><div class="section-head centered reveal"><span class="eyebrow">COMMON QUESTIONS</span><h2 id="faq-heading">Planning {service.shortTitle}</h2></div><div class="faq-list reveal">{service.faqs.map((faq, index) => <details open={index === 0}><summary>{faq.question}</summary><p>{faq.answer}</p></details>)}</div></div>
   </section>
 
   <section class="section section-ivory" id="service-enquiry" aria-labelledby="enquiry-heading">
-    <div class="container enquiry-layout"><div class="reveal"><span class="eyebrow">WHATSAPP ENQUIRY</span><h2 id="enquiry-heading">{service.cta}</h2><p class="service-lead">{service.enquiryPrompt}</p><p>Your enquiry will open securely in WhatsApp for you to review and send. The website does not claim the enquiry was submitted until you send it in WhatsApp.</p><div class="contact-detail"><small>Zenith Line Co.</small><span>{site.address}</span><a href={`tel:+${site.phoneRaw}`}>{site.phoneDisplay}</a></div></div><div class="reveal"><EnquiryForm defaultService={service.shortTitle} compact /></div></div>
+    <div class="container enquiry-layout"><div class="reveal"><span class="eyebrow">WHATSAPP ENQUIRY</span><h2 id="enquiry-heading">{service.cta}</h2><p class="service-lead">{service.enquiryPrompt}</p><p>Your enquiry will open securely in WhatsApp for you to review and send. The website does not claim the enquiry was submitted until you send it in WhatsApp.</p><div class="contact-detail"><small>Zenith Line Co.</small><span>{site.address}</span><a href={`tel:+${site.phoneRaw}`}>{site.phoneDisplay}</a></div></div><div class="reveal"><EnquiryForm defaultService={service.shortTitle} messageIntro={service.whatsapp.split('\n')[0]} sourceUrl={canonical} qualificationFields={isTelecomService} compact /></div></div>
   </section>
 
-  <section class="section" aria-labelledby="related-heading"><div class="container"><div class="section-head reveal"><div><span class="eyebrow">RELATED CAPABILITIES</span><h2 id="related-heading">Connected services for the same project</h2></div><a class="text-link" href="/services/">Explore all Zenith Line services <span aria-hidden="true">→</span></a></div><div class="services-grid services-grid-related">{related.map((item, index) => <ServiceCard service={item} index={index} />)}</div></div></section>
+  <section class="section" id="related-services" aria-labelledby="related-heading"><div class="container"><div class="section-head reveal"><div><span class="eyebrow">RELATED CAPABILITIES</span><h2 id="related-heading">Services commonly coordinated with {service.shortTitle}</h2></div><a class="text-link" href="/services/">Explore all Zenith Line services <span aria-hidden="true">→</span></a></div><div class="services-grid services-grid-related">{related.map((item, index) => <ServiceCard service={item} index={index} />)}</div></div></section>
 
-  {relatedBrands.length > 0 && <section class="section section-ivory" aria-labelledby="related-brands-heading">
+  {relatedBrands.length > 0 && <section class="section section-ivory" id="relevant-brands" aria-labelledby="related-brands-heading">
     <div class="container">
-      <div class="section-head reveal"><div><span class="eyebrow">CONNECTED BRANDS</span><h2 id="related-brands-heading">Technology brands connected to {service.shortTitle}</h2></div><a class="text-link" href="/brands/">Explore the complete brand directory <span aria-hidden="true">→</span></a></div>
-      <div class="related-brands-grid">{relatedBrands.map((brand) => <BrandLogo brand={brand} href={`/brands/${brand.slug}/`} />)}</div>
+      <div class="section-head reveal"><div><span class="eyebrow">RELEVANT PRODUCT OPTIONS</span><h2 id="related-brands-heading">Brands commonly considered for this category</h2></div><p>Available options depend on project requirements, compatibility and current supply. Contact Zenith Line to discuss suitable product options; no authorization or distributorship is implied.</p></div>
+      <div class="related-brands-grid">{relatedBrands.map((brand) => <BrandLogo brand={brand} href={publishedBrandSlugs.has(brand.slug) ? `/brands/${brand.slug}/` : '/brands/'} />)}</div>
     </div>
   </section>}
 </BaseLayout>

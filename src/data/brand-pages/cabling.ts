@@ -29,7 +29,7 @@ export const cablingBrandPages: BrandPage[] = [
       { title: 'Data and comms rooms', description: 'Rack, patching and cable-management layout for dedicated network and server rooms.' },
       { title: 'Industrial and warehouse facilities', description: 'Durable cabling infrastructure suited to larger industrial floor plans and equipment rooms.' }
     ],
-    connectedServiceSlugs: ['structured-cabling', 'supply-logistics', 'installation-support'],
+    connectedServiceSlugs: ['wired-network', 'structured-cabling', 'supply-logistics', 'installation-support'],
     selectionFactors: [
       { title: 'Cable category and performance', description: 'Required data speeds and future-proofing needs affect whether Cat6, Cat6A or fibre is appropriate.' },
       { title: 'Fibre type and distance', description: 'Single-mode or multi-mode fibre selection depends on the required transmission distance and application.' },
@@ -89,7 +89,7 @@ export const cablingBrandPages: BrandPage[] = [
       { title: 'Commercial buildings', description: 'Base-building and tenant cabling infrastructure coordinated with fit-out requirements.' },
       { title: 'Campuses and multi-building sites', description: 'Backbone cabling connecting multiple buildings where distance and durability are key factors.' }
     ],
-    connectedServiceSlugs: ['structured-cabling', 'supply-logistics', 'installation-support'],
+    connectedServiceSlugs: ['wired-network', 'structured-cabling', 'supply-logistics', 'installation-support'],
     selectionFactors: [
       { title: 'Cable category and performance', description: 'Required data speeds and application determine whether standard or industrial-grade Belden cable is appropriate.' },
       { title: 'Fibre type and distance', description: 'Transmission distance and application influence fibre type selection.' },
@@ -149,7 +149,7 @@ export const cablingBrandPages: BrandPage[] = [
       { title: 'Industrial and warehouse facilities', description: 'Long-distance fibre runs connecting separated buildings or site areas.' },
       { title: 'Government and institutional requirements', description: 'Enquiries for public-sector or institutional sites are reviewed against the specific technical and compliance requirements involved.' }
     ],
-    connectedServiceSlugs: ['structured-cabling', 'supply-logistics', 'installation-support'],
+    connectedServiceSlugs: ['wired-network', 'structured-cabling', 'supply-logistics', 'installation-support'],
     selectionFactors: [
       { title: 'Fibre type and distance', description: 'Single-mode or multi-mode fibre selection depends on the required transmission distance and application.' },
       { title: 'Bandwidth requirements', description: 'Current and anticipated future bandwidth needs affect fibre count and type.' },
@@ -209,7 +209,7 @@ export const cablingBrandPages: BrandPage[] = [
       { title: 'Warehouses and industrial facilities', description: 'Durable cabling and cable-management infrastructure suited to larger floor plans.' },
       { title: 'Campuses and multi-building sites', description: 'Backbone cabling and organized patching connecting multiple buildings.' }
     ],
-    connectedServiceSlugs: ['structured-cabling', 'supply-logistics', 'installation-support'],
+    connectedServiceSlugs: ['wired-network', 'structured-cabling', 'supply-logistics', 'installation-support'],
     selectionFactors: [
       { title: 'Cable category and performance', description: 'Required data speeds and future-proofing needs affect whether Cat6, Cat6A or fibre is appropriate.' },
       { title: 'Port count and quantity', description: 'The number of network outlets and patch-panel ports affects overall quantity.' },

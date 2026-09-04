@@ -7,13 +7,16 @@ interface Props {
   compact?: boolean;
   contextType?: 'service' | 'brand';
   contextValue?: string;
+  messageIntro?: string;
+  sourceUrl?: string;
+  qualificationFields?: boolean;
 }
 
-const { defaultService = '', compact = false, contextType = 'service', contextValue = '' } = Astro.props;
+const { defaultService = '', compact = false, contextType = 'service', contextValue = '', messageIntro = '', sourceUrl = '', qualificationFields = false } = Astro.props;
 const isBrand = contextType === 'brand';
 ---
 
-<form class:list={["enquiry-form", compact && "enquiry-form-compact"]} data-whatsapp-form data-phone={site.phoneRaw} data-context-type={contextType} data-context-value={contextValue} data-default-service={defaultService}>
+<form class:list={["enquiry-form", compact && "enquiry-form-compact"]} data-whatsapp-form data-phone={site.phoneRaw} data-context-type={contextType} data-context-value={contextValue} data-default-service={defaultService} data-message-intro={messageIntro} data-source-url={sourceUrl}>
   <div class="form-grid">
     <label><span>Full name *</span><input name="name" type="text" autocomplete="name" required placeholder="Your name" /></label>
     <label><span>Company</span><input name="company" type="text" autocomplete="organization" placeholder="Company name" /></label>
@@ -36,6 +39,13 @@ const isBrand = contextType === 'brand';
             {services.map((service) => <option value={service.shortTitle} selected={defaultService === service.shortTitle}>{service.shortTitle}</option>)}
           </select>
         </label>
+        {qualificationFields && <>
+          <label><span>Property or project type *</span><input name="propertyType" type="text" required placeholder="e.g. office, warehouse, school" /></label>
+          <label><span>Approximate size or quantity</span><input name="approximateSize" type="text" placeholder="Area, users, endpoints or equipment count" /></label>
+          <label><span>Existing system details</span><input name="existingSystem" type="text" placeholder="Models, condition or current setup" /></label>
+          <label><span>Desired timeline</span><input name="timeline" type="text" placeholder="Required date or project programme" /></label>
+          <label class="form-span"><span>Model or brand preference</span><input name="brandPreference" type="text" placeholder="Optional; subject to compatibility and availability" /></label>
+        </>}
         <label class="form-span"><span>Project requirement *</span><textarea name="requirement" rows={compact ? 4 : 5} required placeholder="Describe the property, project, current issue, quantities, drawings or required quotation"></textarea></label>
       </>
     )}
@@ -75,16 +85,25 @@ const isBrand = contextType === 'brand';
         window.dispatchEvent(new CustomEvent('zenith:conversion', { detail: { type: 'whatsapp_form', brand } }));
       } else {
         const selectedService = String(data.get('service') || form.dataset.defaultService || 'a project requirement');
+        const sourcePage = form.dataset.sourceUrl || window.location.href;
         message = [
-          `Hello Zenith Line, I would like to enquire about ${selectedService}.`,
+          form.dataset.messageIntro || `Hello Zenith Line, I would like to enquire about ${selectedService}.`,
           '',
           `Name: ${data.get('name') || '-'}`,
           `Company: ${data.get('company') || '-'}`,
           `Mobile: ${data.get('mobile') || '-'}`,
           `Kuwait area: ${data.get('area') || '-'}`,
           `Service: ${selectedService}`,
+          ...(form.querySelector('[name="propertyType"]') ? [
+            `Property or project type: ${data.get('propertyType') || '-'}`,
+            `Approximate size or quantity: ${data.get('approximateSize') || '-'}`,
+            `Existing system details: ${data.get('existingSystem') || '-'}`,
+            `Desired timeline: ${data.get('timeline') || '-'}`,
+            `Model or brand preference: ${data.get('brandPreference') || '-'}`
+          ] : []),
           `Requirement: ${data.get('requirement') || '-'}`,
-          `Source page: ${window.location.href}`
+          'Consent: Confirmed',
+          `Source page: ${sourcePage}`
         ].join('\n');
         window.dispatchEvent(new CustomEvent('zenith:conversion', { detail: { type: 'whatsapp_form', service: selectedService } }));
       }

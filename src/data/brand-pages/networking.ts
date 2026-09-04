@@ -30,7 +30,7 @@ export const networkingBrandPages: BrandPage[] = [
       { title: 'Campuses and educational facilities', description: 'Multi-building network planning where switching, routing and wireless need to be coordinated across several structures.' },
       { title: 'Government and institutional requirements', description: 'Enquiries for public-sector or institutional sites are reviewed against the specific technical, procurement and compliance requirements involved.' }
     ],
-    connectedServiceSlugs: ['router-wifi', 'structured-cabling', 'network-security', 'installation-support'],
+    connectedServiceSlugs: ['wireless-microwave-networks', 'router-wifi', 'structured-cabling', 'network-security', 'installation-support'],
     selectionFactors: [
       { title: 'Required application', description: 'Whether the requirement is core switching, branch routing, wireless coverage or a mix changes which Cisco product category applies.' },
       { title: 'Number of users or devices', description: 'Port count, wireless client density and expected growth influence model sizing and quantity.' },
@@ -89,7 +89,7 @@ export const networkingBrandPages: BrandPage[] = [
       { title: 'Campuses and educational facilities', description: 'Coordinated wireless coverage across multiple buildings, classrooms and shared outdoor areas.' },
       { title: 'Commercial and mixed-use buildings', description: 'Coverage planning that accounts for tenant boundaries, shared infrastructure and phased occupancy.' }
     ],
-    connectedServiceSlugs: ['router-wifi', 'structured-cabling', 'network-security', 'installation-support'],
+    connectedServiceSlugs: ['wireless-microwave-networks', 'router-wifi', 'structured-cabling', 'network-security', 'installation-support'],
     selectionFactors: [
       { title: 'Building size and construction', description: 'Floor area, wall material and ceiling height directly affect the number and placement of Aruba access points required.' },
       { title: 'Number of connected devices', description: 'Expected concurrent users and device types influence access-point capacity and switch port requirements.' },
@@ -202,7 +202,7 @@ export const networkingBrandPages: BrandPage[] = [
       { title: 'Warehouses and outdoor sites', description: 'Outdoor-rated Ubiquiti access points for yard, parking and semi-outdoor coverage requirements.' },
       { title: 'Campuses and multi-building sites', description: 'Unified network management across several buildings from a single UniFi controller where the project scope supports it.' }
     ],
-    connectedServiceSlugs: ['router-wifi', 'structured-cabling', 'network-security', 'installation-support'],
+    connectedServiceSlugs: ['wireless-microwave-networks', 'router-wifi', 'structured-cabling', 'network-security', 'installation-support'],
     selectionFactors: [
       { title: 'Coverage area and building layout', description: 'Property size, construction material and outdoor coverage needs affect the number and type of access points required.' },
       { title: 'Number of users or devices', description: 'Expected concurrent users and connected devices influence access-point and switch capacity.' },

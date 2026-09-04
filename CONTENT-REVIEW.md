@@ -41,7 +41,19 @@ The organization names and brands on the site come from the supplied profiles. C
 
 Replace profile-sourced and older website photographs with original high-resolution project files when available. Add approved project name, location, client sector, scope and completion details for stronger SEO and enquiry conversion.
 
-The expanded service pages treat supplied photographs as representative imagery and do not identify them as Zenith Line projects. Neutral green-and-bronze technical illustrations were created locally for wireless, cabling, voice, PBX, network security, import/export, technical supply and tools/equipment pages where the supplied photographs did not accurately communicate the service. Confirm any approved project ownership and captions before replacing this restrained wording.
+The expanded service pages treat supplied photographs as representative imagery and do not identify them as Zenith Line projects. Neutral green-and-bronze technical illustrations were created locally for wired networks, wireless and microwave links, cabling, CCTV, voice, PBX, door access, public address, network security, import/export, technical supply and tools/equipment pages where the supplied photographs did not accurately communicate the service. Confirm any approved project ownership and captions before replacing this restrained wording.
+
+## Telecom & IT confirmations
+
+- Confirm which wireless or microwave equipment families and frequency ranges Zenith Line currently supplies and supports. The website does not claim spectrum availability, licensing or permit handling.
+- Confirm the exact Kuwait service area and whether every governorate can be described as routinely served; the current pages use country-level `areaServed: Kuwait` only.
+- Confirm the copper and fibre test instruments, calibration process and report formats available before describing any result as certified.
+- Confirm supported PBX carrier interfaces, migration methods and voice platforms before publishing model-specific compatibility statements.
+- Confirm supported access-control credential types, biometric functions, time-attendance integrations and life-safety interfaces.
+- Confirm whether any public-address offering is designed and documented for emergency evacuation or other life-safety use. The website currently limits the service to paging, announcements and background audio unless verified evidence is supplied.
+- `TOA` was added as a separate directory-only public-address brand following the client feedback. The pre-existing, ambiguous `Tova` directory entry remains unchanged and requires client confirmation before it is corrected or removed.
+- Confirm whether recurring IT support hours, response targets or SLA options should be published. The website currently makes no 24/7 or guaranteed-response promise.
+- Confirm which maintenance services are offered as one-off visits, planned agreements or recurring support for CCTV, access control, public address, networks and PBX.
 
 ## Language
 

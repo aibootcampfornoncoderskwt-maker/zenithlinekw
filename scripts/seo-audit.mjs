@@ -33,6 +33,7 @@ function routeFor(file) {
 function pageType(route) {
   if (route === '/') return 'homepage';
   if (route === '/404.html') return 'error';
+  if (route === '/services/telecom-it/') return 'service-hub';
   if (route.startsWith('/services/') && route !== '/services/') return 'service';
   if (route === '/services/') return 'service-directory';
   if (route.startsWith('/brands/') && route !== '/brands/') return 'brand';

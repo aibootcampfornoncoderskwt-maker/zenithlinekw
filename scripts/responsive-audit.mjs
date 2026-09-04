@@ -37,7 +37,8 @@ const mobilePanelEnd = header.indexOf("<a class:list={[active('/products-supply/
 const mobilePanel = mobilePanelStart >= 0 && mobilePanelEnd > mobilePanelStart ? header.slice(mobilePanelStart, mobilePanelEnd) : '';
 const mobileServiceLinks = [...mobilePanel.matchAll(/href="(\/services\/[^"/]+\/)"/g)].map((match) => match[1]);
 pass(mobilePanel.length > 0, 'mobile Services submenu is missing');
-pass(new Set(mobileServiceLinks).size === 16 && mobileServiceLinks.length === 16, `expected 16 unique mobile service links, found ${new Set(mobileServiceLinks).size}`);
+pass(new Set(mobileServiceLinks).size === 21 && mobileServiceLinks.length === 21, `expected 20 service links plus the Telecom & IT hub, found ${new Set(mobileServiceLinks).size}`);
+pass(!mobileServiceLinks.includes('/services/voip-voice/'), 'mobile Services submenu must not link to retired VoIP route');
 pass(/Construction & Structures/.test(mobilePanel) && /Telecom & IT/.test(mobilePanel) && /Trading & Support/.test(mobilePanel), 'mobile Services category wording is incomplete');
 pass(/data-mobile-services-toggle/.test(header) && /aria-controls="mobile-services-submenu"/.test(header), 'mobile Services toggle is not connected to its submenu');
 pass(!/mega-overview/.test(mobilePanel), 'desktop capability card must not appear in the mobile Services submenu');
@@ -61,6 +62,23 @@ pass(/mobileQuery\.addEventListener\('change'/.test(layout), 'mobile drawer must
 pass(/body\.menu-open/.test(globalCss) && /overscroll-behavior:\s*contain/.test(globalCss), 'mobile drawer scroll locking and independent scrolling are incomplete');
 pass(/min-height:\s*44px/.test(globalCss), 'mobile navigation needs 44px minimum touch targets');
 pass(/\.floating-whatsapp\s*{\s*display:\s*none/.test(globalCss), 'mobile floating WhatsApp control must remain disabled');
+
+// `.site-header` uses backdrop-filter, which makes it the fixed-position containing block for
+// the drawer instead of the viewport -- these guard the specific fix for that (a `top`/`bottom`
+// auto-height drawer silently collapsing to ~52px, and its `top` offset being 36px short of the
+// header's true edge). See the containing-block comment in BaseLayout.astro's syncDrawerTop.
+pass(/--mobile-drawer-height/.test(layout), 'drawer height must be computed in JS (containing-block safe), not left to a top+bottom auto-height formula');
+pass(/header\.offsetHeight/.test(layout), 'drawer top offset must use the header\'s own height, not a viewport-relative getBoundingClientRect().bottom, because backdrop-filter makes the header the containing block');
+pass(/height:\s*var\(--mobile-drawer-height/.test(globalCss), 'drawer height must consume the JS-computed --mobile-drawer-height variable');
+pass(!/\.main-nav\s*{[^}]*bottom:\s*0[^}]*height:\s*auto/.test(globalCss.replace(/\s+/g, ' ')), 'drawer must not reintroduce the top+bottom:0+height:auto pattern that collapses its height');
+
+// Overflow containment: the closed drawer sits off-screen via `transform: translateX(105%)`,
+// which can still register as page-scrollable width unless html/body clip overflow-x.
+pass(/html,\s*body\s*{\s*overflow-x:\s*hidden/.test(globalCss) || (/html\s*{[^}]*overflow-x:\s*hidden/.test(globalCss) && /body\s*{[^}]*overflow-x:\s*hidden/.test(globalCss)), 'html and body must clip overflow-x on mobile so the off-screen closed drawer cannot widen the page');
+
+// Desktop and mobile navigation must be mutually exclusive at the single breakpoint.
+pass(/\.desktop-services-toggle,\s*\.desktop-mega-menu\s*{\s*display:\s*none\s*!important/.test(globalCss), 'desktop Services trigger and mega-menu must be force-hidden below the mobile breakpoint');
+pass(/\.mobile-menu-head,\s*\.mobile-menu-contact,\s*\.mobile-services-toggle,\s*\.mobile-services-panel,\s*\.menu-backdrop\s*{\s*display:\s*none/.test(globalCss), 'mobile-only drawer chrome must be hidden by default (desktop) and only revealed inside the mobile media query');
 
 const sourceFiles = await filesUnder(path.join(projectRoot, 'src'), '.astro');
 for (const file of sourceFiles) {
@@ -110,4 +128,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`Responsive regression audit passed: one mobile drawer, 16 service links, splash fail-safe, scroll/focus behavior, ${checkedLinks} internal links, ${checkedImages} images and ${checkedAssets} asset references checked across ${htmlFiles.length} pages.`);
+console.log(`Responsive regression audit passed: one mobile drawer, 20 service links plus Telecom & IT hub, splash fail-safe, scroll/focus behavior, ${checkedLinks} internal links, ${checkedImages} images and ${checkedAssets} asset references checked across ${htmlFiles.length} pages.`);

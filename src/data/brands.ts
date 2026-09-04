@@ -57,6 +57,7 @@ export const brands: Brand[] = [
   { name: 'TE Connectivity', slug: 'te-connectivity', logo: '/images/brands/te-connectivity.svg' },
   { name: 'Toten', slug: 'toten' },
   { name: 'Tova', slug: 'tova' },
+  { name: 'TOA', slug: 'toa' },
   { name: 'TP-Link', slug: 'tp-link', logo: '/images/brands/tplink.svg' },
   { name: 'Ubiquiti', slug: 'ubiquiti', logo: '/images/brands/ubiquiti.svg' },
   { name: 'UNV / Uniview', slug: 'unv-uniview' },

@@ -29,7 +29,7 @@ export const voiceBrandPages: BrandPage[] = [
       { title: 'Commercial buildings', description: 'Tenant-specific or building-wide voice infrastructure coordinated with structured cabling.' },
       { title: 'Institutional and government requirements', description: 'Enquiries for public-sector or institutional sites are reviewed against the specific technical requirements involved.' }
     ],
-    connectedServiceSlugs: ['voip-voice', 'pbx-telephone-exchange', 'structured-cabling', 'installation-support'],
+    connectedServiceSlugs: ['pbx-telephone-exchange', 'structured-cabling', 'installation-support'],
     selectionFactors: [
       { title: 'Number of extensions', description: 'Total staff and desired phone count affects PBX sizing and the number of IP phones required.' },
       { title: 'Existing telephone lines', description: 'Confirm whether existing analog lines, an ISDN connection or a VoIP trunk needs to connect into the new system.' },
@@ -87,7 +87,7 @@ export const voiceBrandPages: BrandPage[] = [
       { title: 'Commercial buildings', description: 'Tenant-specific or building-wide voice infrastructure coordinated with structured cabling.' },
       { title: 'Warehouses and operational sites', description: 'Internal communication between administrative and operational areas within a single site.' }
     ],
-    connectedServiceSlugs: ['voip-voice', 'pbx-telephone-exchange', 'structured-cabling', 'installation-support'],
+    connectedServiceSlugs: ['pbx-telephone-exchange', 'structured-cabling', 'installation-support'],
     selectionFactors: [
       { title: 'Number of extensions', description: 'Total staff and desired phone count affects PBX sizing and the number of IP phones required.' },
       { title: 'Existing telephone infrastructure', description: 'Confirm whether an existing Avaya or other PBX system needs to be migrated, expanded or replaced.' },
