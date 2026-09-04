@@ -1,16 +1,17 @@
 ---
-import { site } from '../data/site';
+import { site, contact } from '../data/site';
+import InstagramIcon from './InstagramIcon.astro';
 
 const path = Astro.url.pathname;
 const active = (href: string) => href === '/' ? path === '/' : path.startsWith(href);
-const whatsappUrl = `https://wa.me/${site.phoneRaw}?text=${encodeURIComponent('Hello Zenith Line, I would like to discuss a project requirement in Kuwait.')}`;
+const whatsappUrl = `${contact.whatsapp.href}?text=${encodeURIComponent('Hello Zenith Line, I would like to discuss a project requirement in Kuwait.')}`;
 ---
 
 <div class="utility-bar">
   <div class="container utility-inner">
     <span class="utility-kicker"><b>KUWAIT</b> Multi-disciplinary contracting, technology & supply</span>
     <div class="utility-links">
-      <a href={`tel:+${site.phoneRaw}`} aria-label={`Call Zenith Line on ${site.phoneDisplay}`}><span>Call</span> {site.phoneDisplay}</a>
+      <a href={contact.call.href} aria-label={`Call Zenith Line on ${contact.call.display}`}><span>Call</span> {contact.call.display}</a>
       <a href={`mailto:${site.email}`}><span>Email</span> {site.email}</a>
     </div>
   </div>
@@ -66,7 +67,7 @@ const whatsappUrl = `https://wa.me/${site.phoneRaw}?text=${encodeURIComponent('H
             <a href="/services/installation-support/">IT Services & Support</a>
           </div>
           <div class="mega-group">
-            <strong>Trading & Support</strong>
+            <strong>General Trading & Manpower</strong>
             <a href="/services/import-export/">Import / Export</a>
             <a href="/services/supply-logistics/">Supply & Logistics</a>
             <a href="/services/engineering-manpower/">Engineering & Manpower</a>
@@ -102,7 +103,7 @@ const whatsappUrl = `https://wa.me/${site.phoneRaw}?text=${encodeURIComponent('H
             <a href="/services/installation-support/">IT Services & Support</a>
           </div>
           <div class="mobile-services-group">
-            <strong>Trading & Support</strong>
+            <strong>General Trading & Manpower</strong>
             <a href="/services/import-export/">Import / Export</a>
             <a href="/services/supply-logistics/">Supply & Logistics</a>
             <a href="/services/engineering-manpower/">Engineering & Manpower</a>
@@ -115,10 +116,23 @@ const whatsappUrl = `https://wa.me/${site.phoneRaw}?text=${encodeURIComponent('H
       <a class:list={[active('/projects/') && 'is-active']} href="/projects/">Projects</a>
       <a class:list={[active('/about/') && 'is-active']} href="/about/">About</a>
       <a class:list={[active('/contact/') && 'is-active']} href="/contact/">Contact</a>
-      <a class="button button-small nav-cta" href={whatsappUrl} target="_blank" rel="noopener noreferrer"><span class="status-dot"></span> WhatsApp Enquiry</a>
+      <a class="button button-small nav-cta" href={whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label={`Enquire with Zenith Line on WhatsApp at ${contact.whatsapp.display}`} data-cta-location="header" data-conversion="whatsapp"><span class="status-dot"></span> WhatsApp Enquiry</a>
+      <a
+        class="mobile-menu-social"
+        href={site.socials.instagram.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Visit ${site.socials.instagram.label}`}
+        data-social="instagram"
+        data-social-location="mobile-menu"
+      >
+        <InstagramIcon />
+        <span>{site.socials.instagram.handle}</span>
+        <span class="mobile-menu-social-external" aria-hidden="true">↗</span>
+      </a>
       <div class="mobile-menu-contact">
         <span>Direct assistance</span>
-        <a href={`tel:+${site.phoneRaw}`}>{site.phoneDisplay}</a>
+        <a href={contact.call.href} aria-label={`Call Zenith Line on ${contact.call.display}`}>{contact.call.display}</a>
       </div>
     </nav>
   </div>

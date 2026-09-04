@@ -39,9 +39,19 @@ const mobileServiceLinks = [...mobilePanel.matchAll(/href="(\/services\/[^"/]+\/
 pass(mobilePanel.length > 0, 'mobile Services submenu is missing');
 pass(new Set(mobileServiceLinks).size === 21 && mobileServiceLinks.length === 21, `expected 20 service links plus the Telecom & IT hub, found ${new Set(mobileServiceLinks).size}`);
 pass(!mobileServiceLinks.includes('/services/voip-voice/'), 'mobile Services submenu must not link to retired VoIP route');
-pass(/Construction & Structures/.test(mobilePanel) && /Telecom & IT/.test(mobilePanel) && /Trading & Support/.test(mobilePanel), 'mobile Services category wording is incomplete');
+pass(/Construction & Structures/.test(mobilePanel) && /Telecom & IT/.test(mobilePanel) && /General Trading & Manpower/.test(mobilePanel), 'mobile Services category wording is incomplete');
 pass(/data-mobile-services-toggle/.test(header) && /aria-controls="mobile-services-submenu"/.test(header), 'mobile Services toggle is not connected to its submenu');
 pass(!/mega-overview/.test(mobilePanel), 'desktop capability card must not appear in the mobile Services submenu');
+
+// Instagram: compact mobile-drawer social row, positioned after the main nav links, not inside the Services submenu.
+const mobileSocialStart = header.indexOf('class="mobile-menu-social"');
+pass(mobileSocialStart > mobilePanelEnd, 'mobile drawer Instagram link must appear after the main navigation links, not inside the Services submenu');
+const mobileSocialBlock = header.slice(mobileSocialStart, header.indexOf('</a>', mobileSocialStart));
+pass(/href=\{site\.socials\.instagram\.url\}/.test(mobileSocialBlock), 'mobile drawer Instagram link must use the central site.socials.instagram.url value');
+pass(/target="_blank"/.test(mobileSocialBlock) && /rel="noopener noreferrer"/.test(mobileSocialBlock), 'mobile drawer Instagram link must open safely in a new tab');
+pass(/data-social="instagram"/.test(mobileSocialBlock) && /data-social-location="mobile-menu"/.test(mobileSocialBlock), 'mobile drawer Instagram link is missing analytics attributes');
+pass(!/data-conversion="whatsapp"/.test(mobileSocialBlock), 'mobile drawer Instagram link must not be tagged as a WhatsApp conversion');
+pass(/site\.socials\.instagram\.handle/.test(mobileSocialBlock), 'mobile drawer Instagram link must show the confirmed handle');
 
 pass(/position:\s*fixed/.test(splash) && /inset:\s*0/.test(splash), 'splash must be fixed to all viewport edges');
 pass(/width:\s*100%/.test(splash) && /min-height:\s*100vh/.test(splash) && /min-height:\s*100svh/.test(splash) && /height:\s*100dvh/.test(splash), 'splash viewport fallback chain is incomplete');
@@ -78,7 +88,7 @@ pass(/html,\s*body\s*{\s*overflow-x:\s*hidden/.test(globalCss) || (/html\s*{[^}]
 
 // Desktop and mobile navigation must be mutually exclusive at the single breakpoint.
 pass(/\.desktop-services-toggle,\s*\.desktop-mega-menu\s*{\s*display:\s*none\s*!important/.test(globalCss), 'desktop Services trigger and mega-menu must be force-hidden below the mobile breakpoint');
-pass(/\.mobile-menu-head,\s*\.mobile-menu-contact,\s*\.mobile-services-toggle,\s*\.mobile-services-panel,\s*\.menu-backdrop\s*{\s*display:\s*none/.test(globalCss), 'mobile-only drawer chrome must be hidden by default (desktop) and only revealed inside the mobile media query');
+pass(/\.mobile-menu-head,\s*\.mobile-menu-contact,\s*\.mobile-menu-social,\s*\.mobile-services-toggle,\s*\.mobile-services-panel,\s*\.menu-backdrop\s*{\s*display:\s*none/.test(globalCss), 'mobile-only drawer chrome must be hidden by default (desktop) and only revealed inside the mobile media query');
 
 const sourceFiles = await filesUnder(path.join(projectRoot, 'src'), '.astro');
 for (const file of sourceFiles) {

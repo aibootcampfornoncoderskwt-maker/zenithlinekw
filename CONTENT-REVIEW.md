@@ -4,14 +4,25 @@ The site is complete and deployable, but the following company facts must be con
 
 ## Contact details
 
-The website currently uses the newest supplied profile values:
+**Updated:** the website now uses exactly two client-approved contact numbers, each with one distinct purpose, per the client's explicit instruction:
 
-- Primary phone and WhatsApp: **+965 66488191**
-- Additional phones: **+965 99088101**, **+965 97116076**
+- Call: **+965 66488191** (`tel:+96566488191`) — used for every phone/call action, the header, footer, contact page and the Organization schema `telephone`.
+- WhatsApp: **+965 65071368** (`https://wa.me/96565071368`) — used for every WhatsApp enquiry button and every form-generated message, including service, brand, product and project enquiries. This replaced the prior arrangement where the call number was reused inside WhatsApp links.
+- The previously listed additional numbers, **+965 99088101** and **+965 97116076**, have been removed from every page, the footer, `llms.txt` and this file's own historical listing above — they must not be reintroduced.
 - Email: **info@zenithlinekw.com**
 - Address: **#1, 4th Floor, M Square Complex, Abdulmunim Street, Mirqab, Kuwait**
 
 The older profile and current website contain different contact numbers and `sales@zenithlinekw.com`. Confirm which details should remain publicly visible.
+
+### Downloadable company profile PDF still contains obsolete numbers (action required)
+
+`public/downloads/zenith-line-company-profile-2025.pdf` (the file linked from the footer, About, Company Profile and Projects pages) was inspected with `pdftotext` and still lists, on its final "CONTACT US" page:
+
+- `+965 66488191` (correct — the approved call number)
+- `+965 99088101` (obsolete — must be removed)
+- `+965 97116076` (obsolete — must be removed)
+
+The approved WhatsApp number `+965 65071368` does not appear anywhere in the PDF. **This file was not edited or replaced** — no approved corrected source exists in this repository, and the task instructions are explicit that the supplied PDF must not be silently edited or damaged. **Action required from the client:** supply a corrected PDF (removing the two obsolete numbers, and optionally adding the WhatsApp number) so the public download matches the website's contact information. Until that happens, the website's own contact numbers are correct, but the linked PDF is not — do not describe the site as showing "only two numbers" without this caveat, since the PDF itself is part of the public site.
 
 ## Establishment and historical experience
 

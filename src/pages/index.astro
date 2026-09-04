@@ -3,7 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import BrandLogo from '../components/BrandLogo.astro';
 import EnquiryForm from '../components/EnquiryForm.astro';
-import { heroSlides, projects, governmentOrganizations, commercialOrganizations, site } from '../data/site';
+import InstagramIcon from '../components/InstagramIcon.astro';
+import { heroSlides, projects, governmentOrganizations, commercialOrganizations, site, contact } from '../data/site';
 import { services } from '../data/services';
 import { brands } from '../data/brands';
 import { getBrandPage } from '../data/brand-pages';
@@ -52,7 +53,7 @@ const faqSchema = {
             {index === 0 ? <h1>{slide.title}</h1> : <h2>{slide.title}</h2>}
             <p>{slide.text}</p>
             <div class="hero-actions">
-              <a class="button hero-primary-cta" href={`https://wa.me/${site.phoneRaw}?text=${encodeURIComponent(slide.whatsapp)}`} target="_blank" rel="noopener noreferrer">WhatsApp Project Enquiry <span aria-hidden="true">↗</span></a>
+              <a class="button hero-primary-cta" href={`${contact.whatsapp.href}?text=${encodeURIComponent(slide.whatsapp)}`} target="_blank" rel="noopener noreferrer" aria-label={`Enquire with Zenith Line on WhatsApp at ${contact.whatsapp.display}`} data-cta-location="hero" data-conversion="whatsapp">WhatsApp Project Enquiry <span aria-hidden="true">↗</span></a>
               <a class="button button-outline-light hero-secondary-cta" href={slide.primary.href}>{heroSecondaryLabels[index]} <span aria-hidden="true">→</span></a>
             </div>
             <p class="hero-reassurance">Share your requirement, Kuwait location and preferred service.</p>
@@ -89,7 +90,7 @@ const faqSchema = {
     <div class="container trust-grid">
       <div class="trust-item"><strong>Integrated Delivery</strong><span>Engineering, supply and execution</span></div>
       <div class="trust-item"><strong>Kuwait Coverage</strong><span>Government, commercial and private sectors</span></div>
-      <div class="trust-item"><strong>Multi-Disciplinary</strong><span>Civil, MEP, telecom and IT capability</span></div>
+      <div class="trust-item"><strong>Multi-Disciplinary</strong><span>Civil, MEP, ELV, telecom and IT capability</span></div>
       <div class="trust-item"><strong>Project Focus</strong><span>Quality, safety and accountable handover</span></div>
     </div>
   </section>
@@ -125,13 +126,13 @@ const faqSchema = {
     <div class="container">
       <div class="section-head reveal">
         <div><span class="eyebrow">A COMPLETE PROJECT PARTNER</span><h2>One Company. Multiple Engineering Disciplines.</h2></div>
-        <p>Zenith Line brings construction, structures, HVAC, telecom, IT, trading, logistics and technical resources together—helping clients coordinate complex requirements through one accountable team.</p>
+        <p>Zenith Line brings construction, structures, HVAC, MEP, ELV, telecom, IT, general trading, logistics and engineering manpower together—helping clients coordinate complex requirements through one accountable team.</p>
       </div>
       <div class="division-grid">
         <article class="division-card reveal"><span>01</span><h3>Construction & Civil</h3><p>Building construction, renovation, roads, infrastructure, interiors, painting, flooring and specialized civil works.</p><a href="/services/?category=Construction">Explore construction →</a></article>
         <article class="division-card reveal"><span>02</span><h3>Structures & HVAC</h3><p>K-Span structures, custom shades, steel fabrication, equipment shelters and HVAC project services.</p><a href="/services/?category=Structures">Explore structures →</a></article>
-        <article class="division-card reveal"><span>03</span><h3>Telecom & IT</h3><p>Networks, structured cabling, Wi-Fi, PBX, VoIP, CCTV, security, automation and installation support.</p><a href="/services/?category=Telecom%20%26%20IT">Explore technology →</a></article>
-        <article class="division-card reveal"><span>04</span><h3>Trading & Support</h3><p>Import/export, technical supply, Kuwait-wide logistics, engineering resources, tools and equipment.</p><a href="/services/?category=Trading%20%26%20Support">Explore trading →</a></article>
+        <article class="division-card reveal"><span>03</span><h3>Telecom, IT & ELV</h3><p>Networks, structured cabling, Wi-Fi, PBX, CCTV, access control, public address, network security and Extra-Low Voltage (ELV) system integration.</p><a href="/services/?category=Telecom%20%26%20IT">Explore technology →</a></article>
+        <article class="division-card reveal"><span>04</span><h3>General Trading & Manpower</h3><p>Import/export, technical supply, Kuwait-wide logistics, engineering manpower, tools and equipment.</p><a href="/services/?category=General%20Trading%20%26%20Manpower">Explore general trading →</a></article>
       </div>
     </div>
   </section>
@@ -229,6 +230,34 @@ const faqSchema = {
     </div>
   </section>
 
+  <section class="section instagram-cta" aria-labelledby="instagram-cta-title">
+    <div class="container instagram-cta-panel">
+      <div class="instagram-cta-media" aria-hidden="true">
+        <img src="/images/kspan-structure.webp" alt="" width="64" height="64" loading="lazy" decoding="async" />
+        <img src="/images/industrial-construction.webp" alt="" width="64" height="64" loading="lazy" decoding="async" />
+        <img src="/images/network-rack.webp" alt="" width="64" height="64" loading="lazy" decoding="async" />
+      </div>
+      <div class="instagram-cta-copy reveal">
+        <span class="eyebrow">FOLLOW OUR WORK</span>
+        <h2 id="instagram-cta-title">See More from Zenith Line</h2>
+        <p>Follow {site.socials.instagram.handle} on Instagram for company updates, technical work and project-related highlights.</p>
+        <a
+          class="instagram-cta-link"
+          href={site.socials.instagram.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Visit ${site.socials.instagram.label}`}
+          data-social="instagram"
+          data-social-location="homepage"
+        >
+          <InstagramIcon />
+          <span>Follow {site.socials.instagram.handle}</span>
+          <span class="instagram-cta-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <section class="section section-dark home-enquiry" id="enquiry">
     <div class="container enquiry-layout">
       <div class="reveal">
@@ -241,16 +270,17 @@ const faqSchema = {
           <li>Construction, technology and supply enquiries</li>
         </ul>
         <div class="contact-details">
-          <div class="contact-detail"><small>Primary contact</small><a href={`tel:+${site.phoneRaw}`} style="color:white">{site.phoneDisplay}</a></div>
+          <div class="contact-detail"><small>Call</small><a href={contact.call.href} style="color:white" aria-label={`Call Zenith Line on ${contact.call.display}`}>{contact.call.display}</a></div>
+          <div class="contact-detail"><small>WhatsApp</small><a href={contact.whatsapp.href} style="color:white" target="_blank" rel="noopener noreferrer" aria-label={`Enquire with Zenith Line on WhatsApp at ${contact.whatsapp.display}`} data-cta-location="home-enquiry" data-conversion="whatsapp">{contact.whatsapp.display}</a></div>
           <div class="contact-detail"><small>Email</small><a href={`mailto:${site.email}`} style="color:white">{site.email}</a></div>
           <div class="contact-detail"><small>Office</small><span style="color:white">{site.address}</span></div>
         </div>
       </div>
-      <div class="reveal"><EnquiryForm compact /></div>
+      <div class="reveal"><EnquiryForm compact sourceUrl={`${site.domain}/`} /></div>
     </div>
   </section>
 
-  <a class="floating-whatsapp" data-floating-whatsapp href={`https://wa.me/${site.phoneRaw}?text=${encodeURIComponent('Hello Zenith Line, I would like to discuss a project requirement in Kuwait.')}`} target="_blank" rel="noopener noreferrer" aria-label="Start a Zenith Line project enquiry on WhatsApp">
+  <a class="floating-whatsapp" data-floating-whatsapp href={`${contact.whatsapp.href}?text=${encodeURIComponent('Hello Zenith Line, I would like to discuss a project requirement in Kuwait.')}`} target="_blank" rel="noopener noreferrer" aria-label={`Start a Zenith Line project enquiry on WhatsApp at ${contact.whatsapp.display}`} data-cta-location="floating" data-conversion="whatsapp">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .3 5.3.3 11.8c0 2.1.6 4.2 1.6 6L.2 24l6.3-1.7a11.8 11.8 0 0 0 5.6 1.4h.1c6.5 0 11.8-5.3 11.8-11.8 0-3.2-1.3-6.2-3.5-8.4Zm-8.4 18.2c-1.7 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4a9.7 9.7 0 1 1 8.3 4.6Zm5.3-7.2c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-1.7-.9-2.9-1.6-4-3.6-.3-.6.3-.6.8-1.3.1-.2.1-.4 0-.6 0-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.3 3.4 1.4 3.6c.2.2 2.5 3.8 6 5.3.8.4 1.5.6 2 .7.9.3 1.7.2 2.3.1.7-.1 2.2-.9 2.5-1.8.3-.9.3-1.6.2-1.8-.1-.2-.3-.3-.6-.4Z" /></svg>
     <span>Project Enquiry</span>
   </a>

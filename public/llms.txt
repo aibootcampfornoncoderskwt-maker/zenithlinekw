@@ -1,11 +1,13 @@
 # Zenith Line Co., Kuwait
 
-Zenith Line is a Kuwait-based construction, engineering, infrastructure, telecom, IT, trading and technical supply company.
+Zenith Line is a Kuwait-based construction, engineering, infrastructure, MEP, Extra-Low Voltage (ELV), telecom, IT, general trading and manpower company.
 
 Official website: https://zenithlinekw.com/
 Contact: info@zenithlinekw.com
-Primary phone and WhatsApp: +965 66488191
+Phone (calls): +965 66488191
+WhatsApp (enquiries): +965 65071368
 Office: Mirqab, Kuwait City
+Official Instagram: https://www.instagram.com/znthline/ (@znthline)
 
 ## Main company pages
 
@@ -29,7 +31,7 @@ Office: Mirqab, Kuwait City
 
 ## Telecom and IT services
 
-- https://zenithlinekw.com/services/telecom-it/ — Telecom and IT service hub
+- https://zenithlinekw.com/services/telecom-it/ — Telecom, IT and ELV (Extra-Low Voltage) service hub
 - https://zenithlinekw.com/services/wired-network/ — fibre and copper wired network routes
 - https://zenithlinekw.com/services/wireless-microwave-networks/ — point-to-point and microwave network links
 - https://zenithlinekw.com/services/structured-cabling/ — structured copper and fibre cabling

@@ -2,16 +2,38 @@ export const site = {
   name: 'Zenith Line Co.',
   legalName: 'Zenith Line Co.',
   domain: 'https://zenithlinekw.com',
-  phoneDisplay: '+965 66488191',
-  phoneRaw: '96566488191',
-  alternatePhones: ['+965 99088101', '+965 97116076'],
   email: 'info@zenithlinekw.com',
   address: '#1, 4th Floor, M Square Complex, Abdulmunim Street, Mirqab, Kuwait',
   shortAddress: 'Mirqab, Kuwait City',
   description:
-    'Kuwait-based construction, engineering, infrastructure, telecom, IT, trading and technical supply company delivering integrated project solutions.',
-  social: {
-    instagram: 'https://www.instagram.com/znthline/'
+    'Kuwait-based construction, engineering, infrastructure, MEP, ELV, telecom, IT, general trading and manpower company delivering integrated project solutions.',
+  socials: {
+    instagram: {
+      handle: '@znthline',
+      url: 'https://www.instagram.com/znthline/',
+      label: 'Zenith Line on Instagram'
+    }
+  }
+};
+
+/**
+ * The two client-approved public contact numbers, each with exactly one purpose.
+ * Every tel: link, call label and Organization/schema telephone must use `contact.call`.
+ * Every WhatsApp link, enquiry button and form-generated message must use `contact.whatsapp`.
+ * Do not use `contact.call` inside a wa.me URL, and do not make `contact.whatsapp` a tel: link.
+ */
+export const contact = {
+  call: {
+    display: '+965 66488191',
+    international: '+96566488191',
+    raw: '96566488191',
+    href: 'tel:+96566488191'
+  },
+  whatsapp: {
+    display: '+965 65071368',
+    international: '+96565071368',
+    raw: '96565071368',
+    href: 'https://wa.me/96565071368'
   }
 };
 
@@ -31,8 +53,8 @@ export const heroSlides = [
     text: 'Complete telecom and IT delivery covering Wi-Fi, fibre and copper networks, PBX, VoIP, CCTV, security, automation and technical support.',
     image: '/images/network-rack.webp',
     alt: 'Organized network and fibre rack installation',
-    primary: { label: 'View Telecom & IT', href: '/services/telecom-it/' },
-    whatsapp: 'Hello Zenith Line, I would like to discuss a Telecom & IT requirement in Kuwait.'
+    primary: { label: 'View Telecom, IT & ELV', href: '/services/telecom-it/' },
+    whatsapp: 'Hello Zenith Line, I would like to discuss a Telecom, IT or ELV requirement in Kuwait.'
   },
   {
     eyebrow: 'DESIGNED FOR KUWAIT CONDITIONS',

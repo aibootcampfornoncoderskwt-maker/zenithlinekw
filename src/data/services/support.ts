@@ -4,7 +4,7 @@ const illustration = (name: string) => `/images/services/illustrations/${name}.w
 
 export const supportServices: Service[] = [
   {
-    slug: 'import-export', title: 'Import & Export Solutions in Kuwait', shortTitle: 'Import / Export', category: 'Trading & Support',
+    slug: 'import-export', title: 'Import & Export Solutions in Kuwait', shortTitle: 'Import / Export', category: 'General Trading & Manpower',
     seoTitle: 'Import, Export & Sourcing Support Kuwait', metaDescription: 'Discuss international sourcing, supplier coordination, documentation and shipment support for technical and project requirements in Kuwait.',
     heroEyebrow: 'International sourcing and trade support for Kuwait', summary: 'Supplier, order, documentation and shipment coordination for agreed international sourcing and trading requirements.',
     intro: 'Import and export support coordinates the commercial and logistical steps between a buyer, supplier, freight parties and the required destination. Zenith Line can review international sourcing, supplier follow-up, contract or order coordination, documentation support and shipment oversight for selected project and trading requirements. Product eligibility, customs treatment, permits, duties, insurance and regulated approvals must be confirmed for the actual goods and route.',
@@ -66,7 +66,7 @@ export const supportServices: Service[] = [
     ]
   },
   {
-    slug: 'supply-logistics', title: 'Technical Supply & Logistics in Kuwait', shortTitle: 'Supply & Logistics', category: 'Trading & Support',
+    slug: 'supply-logistics', title: 'Technical Supply & Logistics in Kuwait', shortTitle: 'Supply & Logistics', category: 'General Trading & Manpower',
     seoTitle: 'Technical Supply & Logistics Kuwait', metaDescription: 'Request construction, MEP, telecom, IT or industrial materials in Kuwait with specification control, sourcing and coordinated delivery.',
     heroEyebrow: 'Technical materials and delivery coordination across Kuwait', summary: 'Construction, MEP, telecom, IT and industrial materials sourced against the brief and coordinated to the required Kuwait delivery point.',
     intro: 'Technical supply converts a material request, bill of quantities or part list into a controlled sourcing and delivery package. Zenith Line can review construction, mechanical, electrical, instrumentation, telecom, IT and industrial product requirements described in its company profile. Useful procurement depends on complete specifications, quantities, approved equivalents, delivery priorities and clarity on warranty, inspection and acceptance.',
@@ -128,7 +128,7 @@ export const supportServices: Service[] = [
     ]
   },
   {
-    slug: 'engineering-manpower', title: 'Engineering Solutions & Manpower in Kuwait', shortTitle: 'Engineering & Manpower', category: 'Trading & Support',
+    slug: 'engineering-manpower', title: 'Engineering Solutions & Manpower in Kuwait', shortTitle: 'Engineering & Manpower', category: 'General Trading & Manpower',
     seoTitle: 'Engineering Support & Manpower Kuwait', metaDescription: 'Discuss project-based engineering and manpower requirements in Kuwait by discipline, competency, duration, location, supervision and deliverables.',
     heroEyebrow: 'Project engineering and manpower support in Kuwait', summary: 'Project-oriented engineering and workforce support matched to the requested discipline, competency, duration and operating environment.',
     intro: 'Engineering and manpower support provides defined technical or workforce resources to a project, maintenance activity or deployment. Zenith Line can review civil, mechanical, electrical, telecom, IT, skilled and general workforce requirements described in its profile. Each request must state the discipline, competency, duties, location, duration, supervision model, working conditions and required records; no individual qualification is assumed until verified for the proposed resource.',
@@ -190,7 +190,7 @@ export const supportServices: Service[] = [
     ]
   },
   {
-    slug: 'tools-equipment-rental', title: 'Tools, Equipment & Machinery Support in Kuwait', shortTitle: 'Tools & Equipment', category: 'Trading & Support',
+    slug: 'tools-equipment-rental', title: 'Tools, Equipment & Machinery Support in Kuwait', shortTitle: 'Tools & Equipment', category: 'General Trading & Manpower',
     seoTitle: 'Tools, Equipment & Machinery Support Kuwait', metaDescription: 'Request technical tools, test devices, machinery or selected equipment coordination in Kuwait by task, specification, quantity and duration.',
     heroEyebrow: 'Tools, test equipment and machinery support in Kuwait', summary: 'Technical tools, testing devices, machinery and selected rental coordination matched to the task, specification, quantity and duration.',
     intro: 'Tools and equipment support helps project teams obtain suitable equipment for a defined task without relying on a generic category name. Zenith Line can review professional tools, telecom and IT test devices, heavy equipment, machinery, trucks, toolkits and site-safety products described in its profile. Supply or rental availability, operator responsibility, inspection, transport, fuel and consumables must be confirmed for each item.',

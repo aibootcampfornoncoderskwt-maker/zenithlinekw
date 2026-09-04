@@ -72,7 +72,20 @@ The footer's "Core Services" column intentionally lists only 5 of 20 services (C
 
 Every service and brand page renders a semantic, crawlable breadcrumb (`<nav class="breadcrumbs">` with real `<a>` elements, not JS-only) matching its `BreadcrumbList` schema. Telecom & IT detail pages use Home → Services → Telecom & IT → Current service; other service pages use Home → Services → Current service.
 
+## ELV positioning: new internal links (this pass)
+
+The client-approved ELV (Extra-Low Voltage) positioning update added contextual links into and out of the Telecom & IT hub, with varied anchor text so no single phrase is repeated everywhere:
+
+| From | To | Anchor text used |
+|---|---|---|
+| `/` (hero slide 2) | `/services/telecom-it/` | "View Telecom, IT & ELV" |
+| `/about/` | `/services/telecom-it/` | "Explore our Telecom, IT & ELV capabilities →" |
+| `/services/` | `/services/telecom-it/` | "integrated Telecom, IT and ELV capabilities →" |
+| `/services/telecom-it/` (new "Integrated ELV Systems for Kuwait Projects" section) | all 10 Telecom & IT service pages | each service's own short title (e.g. "Wired Network Solutions →", "CCTV Surveillance Systems →") |
+
+This is additive to the existing mega-menu/footer links already covering the hub and its 10 sub-pages — it does not change any existing route or replace an existing link, only adds a few natural mentions so the ELV-relevant pages are reachable from more entry points with descriptive, non-repetitive anchor text.
+
 ## What was not changed
 
-- The Services mega-menu and header structure were left untouched — Phase 7 asks to "improve links without changing the approved page designs," and the mega-menu already provides maximal internal-link equity to every service page from every page on the site (see the `/services/{slug}/` "in-links: 42" figures in `SEO-AUDIT.md`). Adding 15 individual brand links to the header would visually clutter an approved, already-effective navigation component for a benefit the marquee/directory/cross-links already deliver.
+- The Services mega-menu and header structure were left untouched — Phase 7 asks to "improve links without changing the approved page designs," and the mega-menu already provides maximal internal-link equity to every service page from every page on the site (see the `/services/{slug}/` "in-links: 47" figures in `SEO-AUDIT.md`, current as of the 46-indexable-page build). Adding 15 individual brand links to the header would visually clutter an approved, already-effective navigation component for a benefit the marquee/directory/cross-links already deliver.
 - No footer changes — its existing structure already reaches every top-level directory.

@@ -1,5 +1,7 @@
 # Google Business Profile Checklist
 
+> **Superseded by `KUWAIT-LOCAL-SEO-LAUNCH-CHECKLIST.md`**, which consolidates this checklist (Part B there) alongside the verified-in-code Local SEO/GEO signals (Part A). Kept here for history; track completion in the new file going forward.
+
 **This is a manual, post-deployment checklist for the Zenith Line team. Nothing here is or should be automated through code** — Google Business Profile has no supported way to be safely managed from a static website's build process, and attempting to script it would risk the listing's standing.
 
 Use the exact values already stored in `src/data/site.ts` for every field below, so the website and the Business Profile never disagree (NAP — Name, Address, Phone — consistency is itself a local-SEO ranking factor).
@@ -9,8 +11,8 @@ Use the exact values already stored in `src/data/site.ts` for every field below,
 | Claim and verify the business (if not already done) | — | ☐ | | |
 | Business name | `Zenith Line Co.` — exactly this, never a keyword-stuffed variant like "Zenith Line Cisco Kuwait" | ☐ | | |
 | Address | `#1, 4th Floor, M Square Complex, Abdulmunim Street, Mirqab, Kuwait` | ☐ | | |
-| Primary phone | `+965 66488191` | ☐ | | |
-| Additional phone(s), if the profile supports more than one | `+965 99088101`, `+965 97116076` | ☐ | | |
+| Primary phone (calls) | `+965 66488191` | ☐ | | |
+| WhatsApp number, if the profile's messaging feature supports a distinct number | `+965 65071368` — do not enter the call number here, and do not enter the obsolete `+965 99088101` / `+965 97116076` (both removed from the website and must not resurface here) | ☐ | | |
 | Confirm business hours | Not currently published anywhere in the codebase — **confirm real hours with the client before publishing**; do not guess | ☐ | | |
 | Select the most accurate primary category | Likely a general contracting category (e.g. "General Contractor" or "Construction Company") given the business genuinely spans construction, telecom/IT and trading — confirm the single best-fit primary category with the client rather than defaulting to a telecom category just because this SEO pass focused on IT/brand pages | ☐ | | |
 | Add a small number of accurate secondary categories | Only add categories the business genuinely operates in (e.g. an IT/telecom-adjacent secondary category, a general supplier category) — do not add every category that seems tangentially related | ☐ | | |

@@ -7,7 +7,7 @@ import BrandLogo from '../../components/BrandLogo.astro';
 import { publishedBrandPages, getBrandPage, type BrandPage } from '../../data/brand-pages';
 import { brands, getBrandBySlug } from '../../data/brands';
 import { services } from '../../data/services';
-import { site } from '../../data/site';
+import { site, contact } from '../../data/site';
 
 export const getStaticPaths = (() =>
   publishedBrandPages.map((brandPage) => ({ params: { slug: brandPage.slug }, props: { brandPage } }))) satisfies GetStaticPaths;
@@ -36,7 +36,7 @@ function buildBrandWhatsappMessage(brandName: string, sourceUrl: string) {
   ].join('\n');
 }
 
-const whatsappUrl = `https://wa.me/${site.phoneRaw}?text=${encodeURIComponent(buildBrandWhatsappMessage(brand.name, canonical))}`;
+const whatsappUrl = `${contact.whatsapp.href}?text=${encodeURIComponent(buildBrandWhatsappMessage(brand.name, canonical))}`;
 
 const connectedServices = brandPage.connectedServiceSlugs
   .map((slug) => services.find((service) => service.slug === slug))
@@ -179,7 +179,7 @@ const brandSchema = [
         <p class="service-lead">Share the product category, model if known, quantity and project requirement, and the enquiry will be reviewed for sourcing and availability.</p>
         <p>Your enquiry will open in WhatsApp for you to review and send. The website does not claim the enquiry was submitted until you send it in WhatsApp.</p>
         <a class="button button-whatsapp" href={whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label={`Enquire about ${brand.name} products directly on WhatsApp`} data-cta-location="final-enquiry" data-brand={brand.name} data-conversion="whatsapp">Enquire About {brand.name} Products <span aria-hidden="true">↗</span></a>
-        <div class="contact-detail"><small>Zenith Line Co.</small><span>{site.address}</span><a href={`tel:+${site.phoneRaw}`}>{site.phoneDisplay}</a></div>
+        <div class="contact-detail"><small>Zenith Line Co.</small><span>{site.address}</span><a href={contact.call.href} aria-label={`Call Zenith Line on ${contact.call.display}`}>{contact.call.display}</a></div>
       </div>
       <div class="reveal"><EnquiryForm contextType="brand" contextValue={brand.name} compact /></div>
     </div>

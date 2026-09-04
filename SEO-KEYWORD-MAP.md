@@ -17,7 +17,7 @@ One primary intent per indexable page. Primary/secondary keywords below are pull
 
 | URL | Primary keyword | Secondary themes | Intent | Audience | Connected pages | Cannibalization note |
 |---|---|---|---|---|---|---|
-| `/services/telecom-it/` | Telecom & IT services Kuwait | integrated networking, security, voice and IT infrastructure | Commercial hub | Facility, project and IT decision-makers | All 10 Telecom & IT service pages | Broad hub; child pages target specific service intent |
+| `/services/telecom-it/` | Telecom & IT services Kuwait | integrated networking, security, voice, IT infrastructure and ELV (Extra-Low Voltage) system integration | Commercial hub | Facility, project and IT decision-makers | All 10 Telecom & IT service pages | Broad hub; child pages target specific service intent. The hub alone owns broad ELV intent — see "ELV keyword ownership" below |
 | `/services/wired-network/` | wired network installation Kuwait | fibre and copper network contractor, LAN/data network cabling, underground fibre, direct-buried cable, duct/handhole/manhole work | Commercial | IT managers, civil contractors, project teams | Structured Cabling, Wireless & Microwave, IT Support | Physical route and cable installation; not building outlet-system design |
 | `/services/wireless-microwave-networks/` | wireless network solutions Kuwait | point-to-point link, microwave installation, building-to-building connectivity, outdoor wireless bridge, site survey | Commercial | Multi-building and remote-site operators | Wired Network, Wi-Fi, Network Security | External directional links; not indoor Wi-Fi; no unverified frequency or licensing claim |
 | `/services/structured-cabling/` | structured cabling company Kuwait | Cat6, Cat6A, fibre optic cabling, patch panels, cabinets/racks, office data cabling, testing and labelling | Commercial | IT managers, contractors, office project teams | Wired Network, Wi-Fi, CCTV | Standards-led passive building cabling; testing level remains quotation-specific |
@@ -29,7 +29,23 @@ One primary intent per indexable page. Primary/secondary keywords below are pull
 | `/services/network-security/` | network security company Kuwait | firewall installation/configuration, VLANs, business VPN, secure office networks, monitoring, segmentation and assessment | Commercial | IT and security decision-makers | Wi-Fi, IT Support, Structured Cabling | Network controls and assessment; no SOC, incident-response or absolute-security guarantee |
 | `/services/installation-support/` | IT support company Kuwait | business/on-site IT support, server and network support, office maintenance, infrastructure setup, troubleshooting and equipment installation | Commercial | Facility and IT managers | Network Security, Wi-Fi, PBX | Project-based support; hours, response targets and SLA remain unverified |
 
-## Trading & supply services (commercial, procurement/project managers)
+## ELV keyword ownership (hub vs. individual pages)
+
+The client-approved terminology update added Extra-Low Voltage (ELV) positioning across the Telecom & IT pages. To avoid cannibalization, broad "ELV" intent and specific per-system intent are deliberately split:
+
+| Keyword theme | Owned by | Notes |
+|---|---|---|
+| ELV company Kuwait, ELV contractor Kuwait, ELV systems Kuwait, ELV installation Kuwait, Extra-Low Voltage systems Kuwait, ELV solutions for commercial buildings, ELV system integration, ELV maintenance Kuwait | `/services/telecom-it/` (hub only) | The hub carries the "What are ELV systems?" definition and the "Integrated ELV Systems for Kuwait Projects" section linking to all 10 sub-services |
+| structured cabling company Kuwait | `/services/structured-cabling/` | Keeps its existing specific intent; page mentions ELV only as context, not as its target phrase |
+| CCTV installation Kuwait | `/services/cctv-surveillance-systems/` | Same pattern — ELV mentioned as coordination context only |
+| access control system Kuwait | `/services/door-access-security/` | Same pattern |
+| public address system Kuwait | `/services/public-address-systems/` | Same pattern |
+| PBX installation Kuwait | `/services/pbx-telephone-exchange/` | Same pattern |
+| wired network installation Kuwait | `/services/wired-network/` | Same pattern |
+
+None of the 10 individual Telecom & IT pages target the exact phrase "ELV company Kuwait" or similar broad ELV phrases as a primary or secondary keyword — that intent is reserved for the hub to prevent the pages from competing with each other or with the hub.
+
+## General trading & manpower services (commercial, procurement/project managers)
 
 | URL | Primary keyword | Secondary themes | Intent | Audience | Connected pages |
 |---|---|---|---|---|---|
@@ -66,7 +82,7 @@ One primary intent per indexable page. Primary/secondary keywords below are pull
 |---|---|---|---|
 | `/` | Brand entry point, capability overview | "Zenith Line Kuwait" / navigational | Feeds every service and brand hub via header, footer and marquee |
 | `/services/` | Service directory/filter | "Zenith Line services Kuwait" | Category filter via query string (`?category=`), not separate crawlable pages — correctly avoids doorway-page duplication |
-| `/brands/` | Brand directory/search | "Zenith Line brands" / navigational | Lists all 58 brands; only 15 link onward per Phase 1 scope |
+| `/brands/` | Brand directory/search | "Zenith Line brands" / navigational | Lists all 59 brands; only 15 link onward per Phase 1 scope |
 | `/about/` | Company background | "Zenith Line company Kuwait" | Informational/trust-building |
 | `/company-profile/` | PDF download landing page | "Zenith Line company profile" | Low competitive intent by design |
 | `/products-supply/` | Product-category overview (not brand-specific) | "technical supply Kuwait" | Complements `/services/supply-logistics/` and brand pages without competing — it covers *categories* (e.g. "Active Network Components"), not named brands |
@@ -83,4 +99,4 @@ One primary intent per indexable page. Primary/secondary keywords below are pull
 
 ## Cannibalization summary
 
-Only one **watch-list** item was identified (VoIP vs. PBX, above) and it is a pre-existing, deliberate content split, not something introduced or worsened in this pass. No other page shares a primary keyword with another indexable page.
+Only one **watch-list** item was identified (VoIP vs. PBX, above) and it is a pre-existing, deliberate content split, not something introduced or worsened in this pass. No other page shares a primary keyword with another indexable page. The ELV positioning update (see "ELV keyword ownership" above) was designed the same way: the hub owns broad ELV phrases and no individual service page repeats them as a target keyword.

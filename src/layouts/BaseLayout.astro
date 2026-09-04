@@ -3,7 +3,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SplashScreen from '../components/SplashScreen.astro';
-import { site } from '../data/site';
+import { site, contact } from '../data/site';
 
 interface Props {
   title: string;
@@ -24,7 +24,7 @@ const organizationSchema = {
   legalName: site.legalName,
   url: site.domain,
   logo: `${site.domain}/images/zenith-logo.png`,
-  telephone: site.phoneDisplay,
+  telephone: contact.call.international,
   email: site.email,
   address: {
     '@type': 'PostalAddress',
@@ -32,7 +32,8 @@ const organizationSchema = {
     addressLocality: 'Mirqab',
     addressCountry: 'KW'
   },
-  areaServed: { '@type': 'Country', name: 'Kuwait' }
+  areaServed: { '@type': 'Country', name: 'Kuwait' },
+  sameAs: [site.socials.instagram.url]
 };
 const websiteSchema = {
   '@context': 'https://schema.org',
@@ -59,6 +60,7 @@ const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
     <meta name="theme-color" content="#0c272b" />
     {noindex && <meta name="robots" content="noindex,follow" />}
     <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" type="image/png" href="/images/zenith-logo.png" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Zenith Line Co." />
@@ -268,13 +270,24 @@ const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
             track('whatsapp_click', { cta_location: target.dataset.ctaLocation || '', service: target.dataset.service || '', brand: target.dataset.brand || '' });
           } else if (target.matches('a[href^="tel:"]')) {
             track('phone_click', { link_url: target.getAttribute('href') || '' });
+          } else if (target.matches('a[href^="mailto:"]')) {
+            track('email_click', { link_url: target.getAttribute('href') || '' });
           } else if (target.matches('a[href$=".pdf"]')) {
-            track('company_profile_download', { link_url: target.getAttribute('href') || '' });
+            track('profile_download', { link_url: target.getAttribute('href') || '' });
+          } else if (target.matches('[data-social="instagram"]')) {
+            track('instagram_click', { cta_location: target.dataset.socialLocation || '' });
           }
         });
+        document.addEventListener('focusin', (event) => {
+          const form = event.target instanceof Element ? event.target.closest('[data-whatsapp-form]') : null;
+          if (!(form instanceof HTMLElement) || form.dataset.started === 'true') return;
+          form.dataset.started = 'true';
+          const isBrand = form.dataset.contextType === 'brand';
+          track('enquiry_start', { service: !isBrand ? form.dataset.defaultService || '' : '', brand: isBrand ? form.dataset.contextValue || '' : '' });
+        }, true);
         window.addEventListener('zenith:conversion', (event) => {
           const detail = event.detail || {};
-          track('whatsapp_form_submit', { service: detail.service || '', brand: detail.brand || '' });
+          track('enquiry_submit', { service: detail.service || '', brand: detail.brand || '' });
         });
       })();
     </script>}

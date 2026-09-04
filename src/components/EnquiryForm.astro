@@ -1,5 +1,5 @@
 ---
-import { site } from '../data/site';
+import { contact } from '../data/site';
 import { services } from '../data/services';
 
 interface Props {
@@ -16,7 +16,7 @@ const { defaultService = '', compact = false, contextType = 'service', contextVa
 const isBrand = contextType === 'brand';
 ---
 
-<form class:list={["enquiry-form", compact && "enquiry-form-compact"]} data-whatsapp-form data-phone={site.phoneRaw} data-context-type={contextType} data-context-value={contextValue} data-default-service={defaultService} data-message-intro={messageIntro} data-source-url={sourceUrl}>
+<form class:list={["enquiry-form", compact && "enquiry-form-compact"]} data-whatsapp-form data-phone={contact.whatsapp.raw} data-context-type={contextType} data-context-value={contextValue} data-default-service={defaultService} data-message-intro={messageIntro} data-source-url={sourceUrl}>
   <div class="form-grid">
     <label><span>Full name *</span><input name="name" type="text" autocomplete="name" required placeholder="Your name" /></label>
     <label><span>Company</span><input name="company" type="text" autocomplete="organization" placeholder="Company name" /></label>

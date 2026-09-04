@@ -4,7 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import BrandLogo from '../components/BrandLogo.astro';
 import { brands } from '../data/brands';
 import { getBrandPage } from '../data/brand-pages';
-import { site } from '../data/site';
+import { site, contact } from '../data/site';
 
 function brandHref(slug: string) {
   return getBrandPage(slug)?.status === 'published' ? `/brands/${slug}/` : undefined;
@@ -74,7 +74,7 @@ const brandSchema = {
       <div class="content-card reveal">
         <h3>Important brand information</h3>
         <p>All trademarks, logos and brand names belong to their respective owners. References indicate products that may be sourced, supplied or integrated according to project requirements and do not imply an authorized partnership unless expressly confirmed. Availability and warranty terms are confirmed with each quotation.</p>
-        <a class="button button-whatsapp" href={`https://wa.me/${site.phoneRaw}?text=${encodeURIComponent('Hello Zenith Line, I need pricing and availability for a specific technology brand or model in Kuwait.')}`} target="_blank" rel="noopener noreferrer">Request Brand Availability ↗</a>
+        <a class="button button-whatsapp" href={`${contact.whatsapp.href}?text=${encodeURIComponent('Hello Zenith Line, I need pricing and availability for a specific technology brand or model in Kuwait.')}`} target="_blank" rel="noopener noreferrer" aria-label={`Enquire with Zenith Line on WhatsApp at ${contact.whatsapp.display}`} data-cta-location="brands-directory" data-conversion="whatsapp">Request Brand Availability ↗</a>
       </div>
     </div>
   </section>

@@ -6,9 +6,10 @@ import { categories, services } from '../../data/services';
 ---
 
 <BaseLayout title="All Construction, Engineering, Telecom & Trading Services" description="Explore all Zenith Line services in Kuwait including construction, civil, K-Span, HVAC, telecom, IT, cabling, trading, supply and manpower.">
-  <PageHero eyebrow="ALL CAPABILITIES" title="Services Built for Kuwait Projects" text="Twenty equally represented services across construction, structures, MEP, telecom, IT, trading and project support—each with its own scope and direct enquiry route." crumbs={[{ label: 'Home', href: '/' }, { label: 'Services' }]} />
+  <PageHero eyebrow="ALL CAPABILITIES" title="Services Built for Kuwait Projects" text="Twenty equally represented services across construction, structures, MEP, telecom, IT, ELV, general trading and manpower—each with its own scope and direct enquiry route." crumbs={[{ label: 'Home', href: '/' }, { label: 'Services' }]} />
   <section class="section">
     <div class="container">
+      <p class="service-lead">Looking for connected infrastructure? Explore our <a class="text-link" href="/services/telecom-it/">integrated Telecom, IT and ELV capabilities <span>→</span></a></p>
       <div class="filter-bar" aria-label="Filter services by category">
         {categories.map((category, index) => <button class="filter-button" type="button" aria-pressed={index === 0 ? 'true' : 'false'} data-category={category}>{category}</button>)}
       </div>

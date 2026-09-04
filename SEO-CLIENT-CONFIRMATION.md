@@ -4,7 +4,8 @@ This file exists specifically for Phase 6 of the SEO launch work: entity facts t
 
 ## Currently in place (for reference — not asking for confirmation on these)
 
-- `Organization` (`@id: https://zenithlinekw.com/#organization`): name "Zenith Line Co.", legal name "Zenith Line Co.", domain, logo, telephone, email, postal address, `areaServed: Kuwait`. Present exactly once per page via `BaseLayout.astro`.
+- `Organization` (`@id: https://zenithlinekw.com/#organization`): name "Zenith Line Co.", legal name "Zenith Line Co.", domain, logo, telephone, email, postal address, `areaServed: Kuwait`, `sameAs: ["https://www.instagram.com/znthline/"]`. Present exactly once per page via `BaseLayout.astro`.
+- `sameAs` (Organization) — the client has confirmed `https://www.instagram.com/znthline/` (`@znthline`) as the official, actively-managed Instagram profile. Added to `site.ts` as `socials.instagram` and merged into the Organization schema's `sameAs` array; the same URL is also visibly linked from the homepage, footer, contact page and mobile navigation drawer.
 - `WebSite` (`@id: https://zenithlinekw.com/#website`): name, url, `inLanguage: en`, `publisher` referencing the Organization `@id`. Present exactly once per page (added in this pass; a pre-existing duplicate on the homepage was found and removed — see `SEO-AUDIT.md`).
 - Per-service `Service` schema, per-brand `WebPage` + `Brand` sub-entity, `BreadcrumbList`, `FAQPage` matching visible FAQs exactly.
 
@@ -12,7 +13,6 @@ This file exists specifically for Phase 6 of the SEO launch work: entity facts t
 
 | Field | Where it would appear | Why it's not there now |
 |---|---|---|
-| `sameAs` (Organization) — verified social profiles | Organization schema | Only `instagram: https://www.instagram.com/znthline/` exists in `site.ts`, and it is **not currently linked from any page's schema**. Confirm this Instagram account is the official, actively-managed one before adding it as `sameAs` — an unmaintained or wrong account listed as `sameAs` actively hurts entity trust. |
 | `foundingDate` | Organization schema | `CONTENT-REVIEW.md` already flags an unresolved conflict: the newest company profile states "established in 2025" while also listing a 2000–2025 project history. Do not add a founding date until this is resolved with the client — an incorrect founding date is a factual schema error, not a stylistic one. |
 | `numberOfEmployees` | Organization schema | No verified figure supplied anywhere in the codebase or company profile references reviewed. Not added, and should not be estimated. |
 | Additional `telephone`/`ContactPoint` entries | Organization schema | `site.ts` has two `alternatePhones` not currently in the Organization schema (only the primary WhatsApp number is). Confirm whether these should be exposed as a `ContactPoint` array (e.g. distinguishing sales vs. support lines) or kept as display-only contact info. |
